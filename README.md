@@ -2,7 +2,7 @@
 
 Open-source clinostat.
 
-![Clinostat!]|(first_img.jpg "Prototype")
+![Clinostat!](first_img.jpg "Prototype")
 
 To my knowledge this is the first open-source clinostat. This is a side project for me and is very much work in progress.
 
