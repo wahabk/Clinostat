@@ -2,8 +2,8 @@
 
 Open-source 3D clinostat.
 
-![Clinostat cad!](openclino.gif "cadModel")
-
+![Clinostat cad!](openclino_cad.gif "cadModel")
+![Clinostat cad!](openclino_real.gif "realBuilt")
 <!-- ![Clinostat!](first_img.jpg "prototype") -->
 
 I have provided 3d print files, arduino, and raspberry pi-code. This is a side project for me and is very much work in progress.
