@@ -18,7 +18,7 @@ All these parts are rated for thousands of hours of operation, and I have fully 
 # Documentation
 
 OpenClino is designed to be simple, accessible, affordable, and **reliable**.
-I have provided a parts list, printing advice, build guide, and code documentation.
+I have provided a bill of materials, printing advice, build guide, and code documentation.
 
 links to docs
 
