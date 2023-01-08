@@ -4,13 +4,37 @@ what is a clinostat
 
 problem statement
 
-which is x and y
+
+## Contents list
 
 how to go through documentation
 
-code
+- Specifications
+- Notation
+
+## Specifications
+
+
+
+
+
+
+## Notation
+
+
+which is x and y
+
+
+
+## code
 
 c++
 control multiple motors
 acceleration
 docstrings
+
+
+## Electronics
+
+Electronics soldering
+
