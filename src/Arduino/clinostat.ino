@@ -3,7 +3,6 @@ const int motorSteps = 200;
 const int subStep = 16;
 const unsigned long stepsPerRevolution = motorSteps * subStep;
 
-
 //pins
 const int buttonPin = 2;
 const int enablePinX = 3;
@@ -207,8 +206,8 @@ void loop() {
     digitalWrite(LED_BUILTIN, HIGH);
     wake(true, true);
     spin_continuous(1,60,60);
-//    show_off();
-//    RPM();
+  //    show_off();
+  //    RPM();
   }
 
   digitalWrite(LED_BUILTIN, LOW);

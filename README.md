@@ -1,27 +1,32 @@
 # OpenClino - Open-source 3D clinostat
 
-Open-source 3D clinostat.
+Open-source 3D clinostat. A clinostat is a small scale [microgravity simulator](https://www.taylorfrancis.com/chapters/oa-edit/10.1201/9781003338277-17/clinostats-rotating-systems%E2%80%94design-function-limitations-karl-hasenstein-jack-van-loon).
 
-![Clinostat cad!](openclino_cad.gif "cadModel")
-![Clinostat cad!](openclino_real.gif "realBuilt")
+![Clinostat cad!](docs/images/openclino_cad.gif "cadModel")
+![Clinostat real!](docs/images/openclino_real.gif "realBuilt")
 <!-- ![Clinostat!](first_img.jpg "prototype") -->
 
+This is based on the European Space Agency's work, specifically on [Jack Van Loon's clinorotation work](https://doi.org/10.3389/fpls.2019.01577).
+
 I have provided 3d print files, arduino, and raspberry pi-code. This is a side project for me and is very much work in progress.
-It is very difficult to access a 3D clinostat, there are some companies that sell it but can be prohibitively expensive for gravity research.
-OpenClino can be built for £100 using off the shelf parts. OpenClino can run in continuous clinorotation or as a random positioning machine.
+It is very difficult to access a 3D clinostat, there are some companies that sell it but can be prohibitively expensive for gravity research. OpenClino can be built for £100 using off the shelf parts. OpenClino can run in continuous clinorotation or as a Random Positioning Machine (RPM).
 
-This is based on the Eorpean Space Agency's work, specifically on Jack Van Loon's clinorotation work [refs].
-OpenClino is designed to make use of 3D printing's strengths and requires *no machining* and minimum tools. 
-To build OpenClino all the parts are available off the shelf, mainly 3d printer stepper motors, belts, controllers, and skateboard bearings.
-All these parts are rated for thousands of hours of operation, and I have fully tested OpenClino to run for a minimum of 100 hrs without fault.
+OpenClino is designed to be simple, accessible, affordable, and **reliable**. It is designed to make use of 3D printing's strengths and requires *no machining* and minimum tools. To build OpenClino all non-printed parts are available off the shelf, mainly 3d printer stepper motors, belts, controllers, and skateboard bearings. All these parts are rated for thousands of hours of operation, and I have fully tested OpenClino to run for a minimum of 100 hrs without fault.
 
-# Documentation
+## Documentation
 
-OpenClino is designed to be simple, accessible, affordable, and **reliable**.
-I have provided a bill of materials, printing advice, build guide, and code documentation.
+I have provided:
+- Code in `src/`
+- 3D print files as .3MF in `3d_files`
+- bill of materials in `docs/2_BOM.md`
 
-links to docs
+I will provide (TODO):
 
+- build guide (with printing advice) 
+- code documentation.
+
+
+## Usage
 
 To run in clinorotation mode simply add these to your arduino's loop function, this will run the x axis at 30 rpm and the y axis at 60:
 
@@ -33,13 +38,16 @@ void loop() {
 
 Or to run as a random positioning machine, this will run a random walk routine as specified in ESA's work:
 
+
 ```cpp
 void loop() {
     RPM();
 }
 ```
 
-# Collaboration
+Don't forget to set the output pins for you motor controllers!
+
+## Collaboration
 
 Please contact me [here.](https://research-information.bris.ac.uk/en/persons/abdelwahab-kawafi)
 

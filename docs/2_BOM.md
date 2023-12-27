@@ -1,6 +1,5 @@
 # Parts list
 
-
 ## To buy
 
 - 2 x nema 17 motors
