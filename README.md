@@ -1,6 +1,6 @@
 # OpenClino - Open-source 3D clinostat
 
-Open-source 3D clinostat. A clinostat is a small scale [microgravity simulator](https://www.taylorfrancis.com/chapters/oa-edit/10.1201/9781003338277-17/clinostats-rotating-systems%E2%80%94design-function-limitations-karl-hasenstein-jack-van-loon).
+Open-source 3D clinostat. A clinostat is a small scale [microgravity simulator](https://en.wikipedia.org/wiki/Random_positioning_machine).
 
 ![Clinostat cad!](docs/images/openclino_cad.gif "cadModel")
 ![Clinostat real!](docs/images/openclino_real.gif "realBuilt")
