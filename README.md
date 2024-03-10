@@ -4,7 +4,6 @@ Open-source 3D clinostat. A clinostat is a small scale [microgravity simulator](
 
 ![Clinostat cad!](docs/images/openclino_cad.gif "cadModel")
 ![Clinostat real!](docs/images/openclino_real.gif "realBuilt")
-<!-- ![Clinostat!](first_img.jpg "prototype") -->
 
 This is based on the European Space Agency's work, specifically on [Jack Van Loon's clinorotation work](https://doi.org/10.3389/fpls.2019.01577).
 
@@ -15,14 +14,18 @@ OpenClino is designed to be simple, accessible, affordable, and **reliable**. It
 
 ## Documentation
 
+![Clinostat build!](docs/images/build_guide/exploded_view.jpg "explodedView")
+
+
 I have provided:
 - Code in `src/`
 - 3D print files as .3MF in `3d_files`
 - bill of materials in `docs/2_BOM.md`
+- build guide in `docs/3_build_guide.md`
 
 I will provide (TODO):
 
-- build guide (with printing advice) 
+- electronic build guide 
 - code documentation.
 
 

@@ -1,24 +1,25 @@
 # Parts list
 
-## To buy
+## To Buy
 
-- 2 x nema 17 motors
-- 2 x stepper motor controllers (A4988)
-- 2 x 180mm GT2 belts
-- 1 x 220mm GT2 belt
-- 2 x stepper motor pulleys
-- 1m 20x20 aluminium extrusion
-- 12 x 8mm skateboard bearings
+- #1 x Arduino nano
+- #2 x nema 17 motors
+- #2 x stepper motor controllers (A4988)
+- #2 x 180mm GT2 belts
+- #1 x 220mm GT2 belt
+- #2 x stepper motor pulleys
+- #1 x 1mx20mmx20mm aluminium extrusion
+- #12 x 8mm skateboard bearings
 
 Hardware
-- 4 x m8 by 60mm hex bolts
-- 2 x m8 by 100mm hex bolts
-- 8 x m3 bolts
-- 12 x m5 by 
+- #4 x m8 by 60mm hex bolts
+- #2 x m8 by 100mm hex bolts
+- #8 x m3 alan bolts
+- #12 x m5 alan bolts
 
 - 1KG of your printing filament of choice
 
-## To print
+## To Print
 
 - 2 x m_enclosure
 - 2 x m_mounts

@@ -1,27 +1,25 @@
 # OpenClino - Introduction
 
-what is a clinostat
+What is a clinostat?
 
-problem statement
+Problem statement.
 
 
 ## Contents list
 
-how to go through documentation
-
-- Specifications
-- Notation
-
-## Specifications
-
-
-
-
-
 
 ## Notation
 
-
+Definitions
+motor_pulley
+x_pulley
+y_pulley
+m2y pulley
+y_turn
+y_turn_pulley
+y_guide
+motor mount
+motor enclosure
 which is x and y
 
 
@@ -33,8 +31,4 @@ control multiple motors
 acceleration
 docstrings
 
-
-## Electronics
-
-Electronics soldering
 
