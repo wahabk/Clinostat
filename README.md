@@ -14,14 +14,13 @@ OpenClino is designed to be simple, accessible, affordable, and **reliable**. It
 
 ## Documentation
 
-![Clinostat build!](docs/images/build_guide/0_exploded_view.jpg "explodedView")
-
+<img src="docs/images/build_guide/0_exploded_view.jpg" alt="Clinostat build!" width="400"/>
 
 I have provided:
-- Code in `src/`
-- 3D print files as .3MF in `3d_files`
-- bill of materials in `docs/2_BOM.md`
-- build guide in `docs/3_build_guide.md`
+- Code in [`src/`](src/clinostat.ino)
+- 3D print files as .3MF in [`3d_files/`](3d_files/)
+- bill of materials in [`docs/2_BOM.md/`](docs/2_BOM.md/)
+- build guide in [`docs/3_build_guide.md/`](docs/3_build_guide.md/)
 
 I will provide (TODO):
 
