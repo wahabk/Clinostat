@@ -14,7 +14,7 @@ OpenClino is designed to be simple, accessible, affordable, and **reliable**. It
 
 ## Documentation
 
-![Clinostat build!](docs/images/build_guide/exploded_view.jpg "explodedView")
+![Clinostat build!](docs/images/build_guide/0_exploded_view.jpg "explodedView")
 
 
 I have provided:

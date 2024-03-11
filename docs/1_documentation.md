@@ -1,12 +1,6 @@
-# OpenClino - Introduction
-
-What is a clinostat?
-
-Problem statement.
-
+# OpenClino
 
 ## Contents list
-
 
 ## Notation
 
@@ -22,13 +16,11 @@ motor mount
 motor enclosure
 which is x and y
 
+## Code
 
-
-## code
-
-c++
-control multiple motors
-acceleration
-docstrings
+The code is work in progress, it requires the following:
+ - control multiple motors
+ - acceleration
+ - docstrings
 
 
