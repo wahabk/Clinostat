@@ -172,7 +172,7 @@ We will build the sub assemblies: y_turn, bodies, and the base, and the final st
 
 <img src="images/build_guide/6_finito.jpg" alt="combine" width="400"/>
 
-Make sure every pulley and axis rotates smoothly. If there is friction anywhere you might have to loosen the bolts or sand down interference.
+Make sure every pulley and axis rotates smoothly. If there is friction anywhere you might have to loosen the bolts or sand down interference from your prints.
 
 ## Electronics
 
