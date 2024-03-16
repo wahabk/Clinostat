@@ -20,13 +20,8 @@
 
 ## 3D Printing
 
-All files are available in `3d_files/`. The parts can be printed in PLA but I prefer to use PETG. 
-
-All the parts are printed on an Ender 3. I usually have to sand down the edges due to stringing etc.
-According to your printer's over/under extrusion you might have to sand down edges, or add silicon tape to the bolt heads so they key into the bodies.
-I personally prefer to use a brim.
-
-The only part that needs supports is the m2y pulley.
+All files are available in `3d_files/`.
+The parts can be printed in PLA but I prefer to use PETG. 
 
 ## Hardware
 
@@ -41,6 +36,8 @@ We will build the sub assemblies: y_turn, bodies, and the base, and the final st
             1.5 mm for the motor pulley grub screw.
 
 ### Build Instructions:
+
+Ensure you have all the parts from the [`Bill of Materials`](2_BOM.md).
 
 #### **1 - Build y_turn.**
 
