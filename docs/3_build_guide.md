@@ -16,16 +16,15 @@
       - [**3 - x\_pulley and m2y pulley.**](#3---x_pulley-and-m2y-pulley)
       - [**4 - Build the base.**](#4---build-the-base)
       - [**5 - Final Assembly.**](#5---final-assembly)
-  - [Electronics](#electronics)
 
 
 ## 3D Printing
 
-All files are available in `3d_files/`. The parts can be printed in PLA but I prefer to use PETG.
+All files are available in `3d_files/`. The parts can be printed in PLA but I prefer to use PETG. 
 
-All the parts are printed on an ender 3. I usually have to sand down the edges due to stringing etc.
-
-Print temperatures will depend on your filament, but I personally prefer to use a brim.
+All the parts are printed on an Ender 3. I usually have to sand down the edges due to stringing etc.
+According to your printer's over/under extrusion you might have to sand down edges, or add silicon tape to the bolt heads so they key into the bodies.
+I personally prefer to use a brim.
 
 The only part that needs supports is the m2y pulley.
 
@@ -174,10 +173,3 @@ We will build the sub assemblies: y_turn, bodies, and the base, and the final st
 
 Make sure every pulley and axis rotates smoothly. If there is friction anywhere you might have to loosen the bolts or sand down interference from your prints.
 
-## Electronics
-
-**Note**: be careful with the electronics as they can start a fire! This must be done with adult supervision.
-
-I would recommend building this onto a breadboard so you are comfortable with the pieces before final soldering.
-
-TODO
