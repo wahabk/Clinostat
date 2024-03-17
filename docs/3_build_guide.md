@@ -87,13 +87,15 @@ Ensure you have all the parts from the [`Bill of Materials`](2_BOM.md).
 
    b) m2y pulley: push fit two bearings into the m2y pulley and add washers for now.
       
-      **NOTE**: the tricky part here is making sure the long belt doesnt scrape the motor like step 5e, 
+  **NOTE**: the tricky part here is making sure the long belt doesnt scrape the motor like step 5e, 
       
       so remember to keep the wider part of the m2y close to the x body, 
       
       and place 2 or 3washers between the x body and the m2y pulley.
    
 <img src="images/build_guide/4_x_pulley.jpg" alt="combine" width="400"/>
+
+TODO update m2y image
 
    We have now fully combined x and y bodies!
 
