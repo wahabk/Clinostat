@@ -13,10 +13,10 @@
 
 Clinostats are usually used in biology for plants, cell cultures, and small animals such as fish.
 
-1 OpenClino shall be robust to failures to not harm the animals or samples. 
-4 Openclino must be simple, accessible, and affordable, requiring no machining.
-2 OpenClino should operate in hot and humid environments such as incubators.
-3 OpenClino should operate as a clinostat or RPM.
+1. OpenClino shall be robust to failures to not harm the animals or samples. 
+2. Openclino must be simple, accessible, and affordable, requiring no machining.
+3. OpenClino should operate in hot and humid environments such as incubators.
+4. OpenClino should operate as a clinostat or RPM.
 
 At the moment it is a work in progress.
 I'm not an electrical engineer so this is 12v. Be careful with your electronics. 
