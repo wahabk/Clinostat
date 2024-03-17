@@ -35,7 +35,7 @@
 | 1        | y_guide        | -    |
 | 1        | y_pulley       | -    |
 
-All files are available in `3d_files/`. The parts can be printed in PLA but I prefer to use PETG. 
+All files are available in `3d_files/`.
 
 All the parts are printed with 20% infill, and I use an Ender 3. I usually have to sand down the edges due to stringing etc.
 According to your printer's over/under extrusion you might have to sand down edges, or add silicon tape to the bolt heads so they key into the bodies.

@@ -14,13 +14,13 @@
 Clinostats are usually used in biology for plants, cell cultures, and small animals such as fish.
 
 1 - OpenClino shall be robust to failures to not harm the animals or samples. 
-2 - OpenClino should operate in hot/humid environments such as incubators.
-
+2 - OpenClino should operate in hot and humid environments such as incubators.
 3 - OpenClino should operate as a clinostat or RPM.
 
 At the moment it is a work in progress. I'm not an electrical engineer so this is 12v.
 Be careful with your electronics. 
 At the moment it functions as a clino but not an RPM. The motors can't start a new direction or speed independently.
+You can buy waterproof nema17s and have the electronics outside of the incubator if needed.
 
 ## Code
 
@@ -30,7 +30,7 @@ The code is work in progress, it requires the following:
  - docs.
 
 ## Notation
-TODO 
+TODO make a figure defining part names
 
 Definitions:
 motor_pulley

@@ -17,14 +17,14 @@ OpenClino is designed to be simple, accessible, affordable, and **reliable**. It
 <img src="docs/images/build_guide/0_exploded_view.jpg" alt="Clinostat build!" width="400"/>
 
 I have provided:
+- Docs in [`docs/1_.md/`](docs/1_documentation.md)
 - Code in [`src/`](src/clinostat.ino)
 - 3D print files as .3MF in [`3d_files/`](3d_files/)
-- bill of materials in [`docs/2_BOM.md/`](docs/2_BOM.md/)
-- build guide in [`docs/3_build_guide.md/`](docs/3_build_guide.md/)
+  Bbill of materials in [`docs/2_BOM.md/`](docs/2_BOM.md/)
+- Build guide in [`docs/3_build_guide.md/`](docs/3_build_guide.md/)
 
 I will provide (TODO):
 
-- electronic build guide 
 - code documentation.
 
 
@@ -51,6 +51,6 @@ Don't forget to set the output pins for you motor controllers!
 
 ## Collaboration
 
-Please contact me [here.](https://research-information.bris.ac.uk/en/persons/abdelwahab-kawafi)
+Please contact me on LinkedIn or raise an issue.
 
-I would be happy to collaborate on this, if you need advice or would like me to print you some parts do not hesitate to get in touch.
+I would be happy to collaborate on this.
