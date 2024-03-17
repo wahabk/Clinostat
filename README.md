@@ -54,3 +54,7 @@ Don't forget to set the output pins for you motor controllers!
 Please contact me on LinkedIn or raise an issue.
 
 I would be happy to collaborate on this.
+
+## Contributors
+
+[@dragomda](https://github.com/dragomda)
