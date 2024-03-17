@@ -37,8 +37,6 @@
 
 All files are available in `3d_files/`. The parts can be printed in PLA but I prefer to use PETG. 
 
-All the parts are printed on an Ender 3. I usually have to sand down the edges due to stringing etc.
+All the parts are printed with 20% infill, and I use an Ender 3. I usually have to sand down the edges due to stringing etc.
 According to your printer's over/under extrusion you might have to sand down edges, or add silicon tape to the bolt heads so they key into the bodies.
 I personally prefer to use a brim.
-
-The only part that needs supports is the m2y pulley.
