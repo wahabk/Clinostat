@@ -20,7 +20,7 @@ I have provided:
 - Docs in [`docs/1_.md/`](docs/1_documentation.md)
 - Code in [`src/`](src/clinostat.ino)
 - 3D print files as .3MF in [`3d_files/`](3d_files/)
-  Bbill of materials in [`docs/2_BOM.md/`](docs/2_BOM.md/)
+- Bill of materials in [`docs/2_BOM.md/`](docs/2_BOM.md/)
 - Build guide in [`docs/3_build_guide.md/`](docs/3_build_guide.md/)
 
 I will provide (TODO):
