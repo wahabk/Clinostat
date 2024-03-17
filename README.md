@@ -57,4 +57,4 @@ I would be happy to collaborate on this.
 
 ## Contributors
 
-[@dragomda](https://github.com/dragomda)
+[Dan Dragomirescu @dragomda](https://github.com/dragomda)
