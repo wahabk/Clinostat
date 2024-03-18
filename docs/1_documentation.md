@@ -23,13 +23,7 @@ I'm not an electrical engineer so this is 12v. Be careful with your electronics.
 At the moment it functions as a clino but not a true RPM. The motors can't start a new direction or speed independently.
 You can buy waterproof nema17s and have the electronics outside of the incubator if needed.
 
-## Code
-
-The code is work in progress, it requires the following:
- - control multiple motors.
- - acceleration.
- - docs.
- - Implementing the airbus algorithm for variable G.
+TODO material requirements
 
 ## Notation
 TODO make a figure defining part names
@@ -42,6 +36,37 @@ m2y pulley
 y_turn
 y_turn_pulley
 y_guide
-motor mount
-motor enclosure
+motor_mount
+motor_enclosure
 which is x and y
+
+
+## Code
+
+The code is work in progress, it requires the following:
+ - control multiple motors separately.
+ - acceleration.
+ - docs.
+ - Implementing the airbus algorithm for variable G.
+
+### Usage
+
+To run in clinorotation mode simply add these to your arduino's loop function, this will run the x axis at 30 rpm and the y axis at 60:
+
+```cpp
+void loop() {
+    spin_continuous(30,60);
+}
+```
+
+Or to run as a random positioning machine, this will run a random walk routine as specified in ESA's work:
+
+
+```cpp
+void loop() {
+    RPM();
+}
+```
+
+Don't forget to set the output pins for you motor controllers!
+

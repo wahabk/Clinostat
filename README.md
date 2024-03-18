@@ -19,7 +19,7 @@ OpenClino is designed to be simple, accessible, affordable, and **reliable**. It
 
 I have provided:
 - Docs in [`docs/1_.md/`](docs/1_documentation.md)
-- Code in [`src/`](src/clinostat.ino)
+- Code in [`src/`](src/openclino.ino)
 - 3D print files as .3MF in [`3d_files/`](3d_files/)
 - Bill of materials in [`docs/2_BOM.md/`](docs/2_BOM.md/)
 - Build guide in [`docs/3_build_guide.md/`](docs/3_build_guide.md/)
@@ -29,7 +29,7 @@ I will provide (TODO):
 - code documentation.
 
 
-## Usage
+## Quick Usage
 
 To run in clinorotation mode simply add these to your arduino's loop function, this will run the x axis at 30 rpm and the y axis at 60:
 
