@@ -3,7 +3,7 @@ const int motorSteps = 200;
 const int subStep = 16;
 const unsigned long stepsPerRevolution = motorSteps * subStep;
 
-// pins hello
+// pins o
 const int buttonPin = 2;
 const int enablePinX = 3;
 const int stepPinX = 4;
