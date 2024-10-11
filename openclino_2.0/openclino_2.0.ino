@@ -3,7 +3,7 @@ const int StepperSteps = 200;
 const int subStep = 16;
 const unsigned long stepsPerRevolution = StepperSteps * subStep;
 
-// pins o
+// pins
 const int buttonPin = 2;
 const int enablePinX = 3;
 const int stepPinX = 4;
@@ -34,6 +34,10 @@ public:
     this->dirPin = dirPin;
     this->enablePin = enablePin;
     this->nStepsPerRot = nStepsPerRot;
+    pinMode(stepPin, OUTPUT);
+    pinMode(dirPin, OUTPUT);
+    pinMode(enablePin, OUTPUT);
+    pinMode(stepPin, OUTPUT);
   }
 
   void wake(bool enable)
@@ -62,8 +66,8 @@ public:
 
   void step()
   {
-    digitalWrite(stepPin, HIGH);
     digitalWrite(stepPin, LOW);
+    digitalWrite(stepPin, HIGH);
   }
 
 private:
@@ -73,15 +77,17 @@ private:
   int nStepsPerRot;
 };
 
+// Define the motors globally
+Stepper motorX(stepPinX, dirPinX, enablePinX, nStepsXperRot);
+Stepper motorY(stepPinY, dirPinY, enablePinY, nStepsYperRot);
+
 void setup()
 {
-  Stepper motorX(stepPinX, dirPinX, enablePinX, nStepsXperRot);
-  Stepper motorY(stepPinY, dirPinY, enablePinY, nStepsYperRot);
-  
   pinMode(buttonPin, INPUT);
   pinMode(LED_BUILTIN, OUTPUT);
   Serial.begin(9600);
   Serial.print("--\nHello\n--");
+  Serial.println(nStepsXperRot);
 
   motorX.wake(false);
   motorY.wake(false);
@@ -89,19 +95,31 @@ void setup()
 
 void loop()
 {
-//  buttonState = digitalRead(buttonPin);
-//
-//  wake(false, false);
-//
-//  if (buttonState == HIGH)
-//  {
-//    digitalWrite(LED_BUILTIN, HIGH);
-//    wake(true, true);
-//    spin_continuous(1, 60, 60);
-//    //  show_off();
-//    //  RPM();
-//  }
-//
-//  digitalWrite(LED_BUILTIN, LOW);
-//  delay(10); // Wait a second
+  buttonState = digitalRead(buttonPin);
+  motorX.wake(false);
+  motorY.wake(false);
+  motorX.setDirection(false);
+  motorY.setDirection(true);
+  if (buttonState == HIGH)
+  {
+    int speedX = 80;
+    digitalWrite(LED_BUILTIN, HIGH);
+    unsigned long IntervalX = (6e7 / speedX) / nStepsXperRot;
+    
+    for (int i = 0; i < 10000; i++)
+    {
+      motorX.wake(true);
+      motorY.wake(true);
+      motorX.step();
+      motorY.step();
+//      Serial.print("Stepping - interval: ");
+//      Serial.print(IntervalX);
+//      Serial.print(" - step: ");
+//      Serial.println(i);
+      delayMicroseconds(IntervalX);
+    }
+  }
+
+  digitalWrite(LED_BUILTIN, LOW);
+  delay(10); // Wait a second
 }
