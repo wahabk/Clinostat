@@ -1,3 +1,6 @@
+#include <AccelStepper.h>
+#include <MultiStepper.h>
+
 // Define steps per revolution
 const int StepperSteps = 200;
 const int subStep = 16;
@@ -105,17 +108,17 @@ void loop()
     int speedX = 80;
     digitalWrite(LED_BUILTIN, HIGH);
     unsigned long IntervalX = (6e7 / speedX) / nStepsXperRot;
-    
+
     for (int i = 0; i < 10000; i++)
     {
       motorX.wake(true);
       motorY.wake(true);
       motorX.step();
       motorY.step();
-//      Serial.print("Stepping - interval: ");
-//      Serial.print(IntervalX);
-//      Serial.print(" - step: ");
-//      Serial.println(i);
+      //      Serial.print("Stepping - interval: ");
+      //      Serial.print(IntervalX);
+      //      Serial.print(" - step: ");
+      //      Serial.println(i);
       delayMicroseconds(IntervalX);
     }
   }
