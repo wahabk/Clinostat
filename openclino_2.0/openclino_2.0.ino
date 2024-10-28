@@ -105,9 +105,12 @@ void loop()
   motorY.setDirection(true);
   if (buttonState == HIGH)
   {
-    int speedX = 80;
+    int speedX = 50;
+    int speedY = 4;
     digitalWrite(LED_BUILTIN, HIGH);
     unsigned long IntervalX = (6e7 / speedX) / nStepsXperRot;
+    unsigned long IntervalY = (6e7 / speedY) / nStepsYperRot;
+
 
     for (int i = 0; i < 10000; i++)
     {
@@ -118,7 +121,7 @@ void loop()
       //      Serial.print("Stepping - interval: ");
       //      Serial.print(IntervalX);
       //      Serial.print(" - step: ");
-      //      Serial.println(i);
+//            Serial.println(i);
       delayMicroseconds(IntervalX);
     }
   }

@@ -157,7 +157,7 @@ void spin_continuous(int t = 1, float speedX = 10, float speedY = 10, int finalD
   delay(finalDelay);
 }
 
-void spin_degs(float degX, float degY, float speedX = 60, float speedY = 60, int finalDelay = 100)
+void spin_degs(float degX, float degY, float speedX = 10, float speedY = 10, int finalDelay = 100)
 {
   //  wake(true, true);
 
@@ -253,10 +253,23 @@ void spin_degs(float degX, float degY, float speedX = 60, float speedY = 60, int
 
 void show_off()
 {
-  spin_degs(180, 180);
-  spin_degs(-180, -180);
-  spin_degs(-180, 180);
+  spin_degs(90, -90);
+  spin_degs(-90, 90);
+  spin_degs(90, 90);
   spin_degs(180, -180);
+  spin_degs(-180, 180);
+}
+
+void calibrate()
+{
+  spin_degs(90, 0);
+  spin_degs(0, 90);
+  spin_degs(90, 0);
+  spin_degs(0, 90);
+  spin_degs(90, 0);
+  spin_degs(0, 90);
+  spin_degs(90, 0);
+  spin_degs(0, 90);
 }
 
 void RPM()
@@ -291,8 +304,8 @@ void loop()
   {
     digitalWrite(LED_BUILTIN, HIGH);
     wake(true, true);
-    spin_continuous(1, 60, 60);
-    //  show_off();
+//    spin_continuous(1, 60, 60);
+      calibrate();
     //  RPM();
   }
 
