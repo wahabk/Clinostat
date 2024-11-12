@@ -1,10 +1,4 @@
 #include <AccelStepper.h>
-#include <MultiStepper.h>
-
-// Define steps per revolution
-const int StepperSteps = 200;
-const int subStep = 16;
-const unsigned long stepsPerRevolution = StepperSteps * subStep;
 
 // pins
 const int buttonPin = 2;
@@ -15,117 +9,222 @@ const int enablePinY = 6;
 const int stepPinY = 7;
 const int dirPinY = 8;
 
-// pulley diameters
-const float xMotD = 9.5;
-const float xPulleyD = 31.5;
-const float yMotD = 9.5;
-const float yTurnD = 31.5;
-const float yPulleyD = 18.5;
-const double xRatio = xMotD / xPulleyD; // diameters
-const double yRatio = yMotD / yPulleyD;
-const int nStepsXperRot = stepsPerRevolution / xRatio;
-const int nStepsYperRot = stepsPerRevolution / yRatio;
+// Define steps per revolution
+const int motorSteps = 200;
+const int subStep = 16;
+const unsigned long stepsPerRevolution = motorSteps * subStep;
+// eposilon to fix discrepancy between my motor types
+// set to 1 to undo calibration.
+const double epsilon = 1.5;
+
+// Pulley teeth
+const float xMotTeeth = 16;
+const float xPulleyTeeth = 50;
+const float yMotTeeth = 16;
+const float yTurnTeeth = 50;
+const float yPulleyTeeth = 20;
+
+// Calculate the gear ratios based on pulley teeth
+const double xRatio = xPulleyTeeth / xMotTeeth;
+const double yRatio1 = yTurnTeeth / yMotTeeth;
+const double yRatio2 = yPulleyTeeth / yTurnTeeth;
+const double yRatio = yRatio1 * yRatio2 * epsilon;
+
+// Calculate effective steps per rotation
+const double nStepsPerRotX = stepsPerRevolution * xRatio;
+const double nStepsPerRotY = stepsPerRevolution * yRatio;
 
 int buttonState = 0;
 
-class Stepper
+// Define AccelStepper objects for X and Y axes
+AccelStepper stepperX(1, stepPinX, dirPinX);
+AccelStepper stepperY(1, stepPinY, dirPinY);
+
+void wake(bool x, bool y)
 {
-public:
-  Stepper(int stepPin, int dirPin, int enablePin, int nStepsPerRot)
+  if (x == true)
   {
-    this->stepPin = stepPin;
-    this->dirPin = dirPin;
-    this->enablePin = enablePin;
-    this->nStepsPerRot = nStepsPerRot;
-    pinMode(stepPin, OUTPUT);
-    pinMode(dirPin, OUTPUT);
-    pinMode(enablePin, OUTPUT);
-    pinMode(stepPin, OUTPUT);
+    digitalWrite(enablePinX, LOW);
+  }
+  else
+  {
+    digitalWrite(enablePinX, HIGH);
+  }
+  if (y == true)
+  {
+    digitalWrite(enablePinY, LOW);
+  }
+  else
+  {
+    digitalWrite(enablePinY, HIGH);
+  }
+}
+
+void xClockwise(bool foo)
+{
+  if (foo == true)
+  {
+    digitalWrite(dirPinX, HIGH);
+  }
+  else
+  {
+    digitalWrite(dirPinX, LOW);
+  }
+}
+
+void yClockwise(bool foo)
+{
+  if (foo == true)
+  {
+    digitalWrite(dirPinY, LOW);
+  }
+  else
+  {
+    digitalWrite(dirPinY, HIGH);
+  }
+}
+
+void spin_continuous(float speedRPMX = 60, float speedRPMY = 60, int finalDelay = 100)
+{
+  // Convert RPM to steps per second for speed settings
+  double speedX = (speedRPMX * nStepsPerRotX) / 60.0;
+  double speedY = (speedRPMY * nStepsPerRotY) / 60.0;
+
+  // Set speeds and accelerations for each motor
+  stepperX.setMaxSpeed(speedX);
+  stepperY.setMaxSpeed(speedY);
+  stepperX.setAcceleration(speedX * 2); // Adjust acceleration factor as needed
+  stepperY.setAcceleration(speedY * 2);
+
+  delay(1000); // Final delay to settle motors
+
+  // set motors to run until button is pressed
+  while (buttonState == LOW)
+  {
+    stepperX.runSpeed();
+    stepperY.runSpeed();
+    stepperX.run();
   }
 
-  void wake(bool enable)
+  // Optionally, stop the motors after the button is pressed
+  stepperX.stop();
+  stepperY.stop();
+}
+
+void spin_degs(float degX, float degY, float speedX = 10, float speedY = 10, int finalDelay = 100)
+{
+  // This function is perfect without accel
+  // Initialize motor direction based on target degrees
+  bool xClock = (degX >= 0);
+  bool yClock = (degY >= 0);
+
+  // Calculate steps needed for each axis based on degree input
+  int nStepsX = nStepsPerRotX * abs(degX / 360.0);
+  int nStepsY = nStepsPerRotY * abs(static_cast<float>(degY) / 360.0);
+
+  // Determine intervals for each motor based on speed
+  long intervalX = (6e7 / speedX) / nStepsPerRotX;
+  long intervalY = (6e7 / speedY) / nStepsPerRotY;
+
+  // Initialize step counters and timing variables
+  unsigned long stepsX = 0;
+  unsigned long stepsY = 0;
+  unsigned long previousTimeX = micros();
+  unsigned long previousTimeY = micros();
+
+  while (stepsX < nStepsX || stepsY < nStepsY)
   {
-    if (enable)
+    unsigned long currentTime = micros();
+    bool skipCompensation = false;
+
+    // Check if it's time to move motor X
+    if ((currentTime - previousTimeX > intervalX) && (stepsX < nStepsX))
     {
-      digitalWrite(enablePin, LOW);
+      // Move X motor
+      xClockwise(xClock);
+      digitalWrite(stepPinX, LOW);
+      digitalWrite(stepPinX, HIGH);
+      previousTimeX = currentTime;
+      stepsX++;
+
+      // Compensation logic: Skip compensation when both axes move, Y motor moves in opposite direction to X
+      if (!(stepsY < nStepsY && (currentTime - previousTimeY > intervalY) && yClock != xClock))
+      {
+        // Move Y motor to compensate
+        yClockwise(!xClock);
+        digitalWrite(stepPinY, LOW);
+        digitalWrite(stepPinY, HIGH);
+      }
     }
-    else
+
+    // Check if it's time to move motor Y
+    if ((currentTime - previousTimeY > intervalY) && (stepsY < nStepsY))
     {
-      digitalWrite(enablePin, HIGH);
+      // Move Y motor
+      yClockwise(yClock);
+      digitalWrite(stepPinY, LOW);
+      digitalWrite(stepPinY, HIGH);
+      previousTimeY = currentTime;
+      stepsY++;
     }
   }
 
-  void setDirection(bool clockwise)
-  {
-    if (clockwise)
-    {
-      digitalWrite(dirPin, HIGH);
-    }
-    else
-    {
-      digitalWrite(dirPin, LOW);
-    }
-  }
+  delay(finalDelay); // Final delay to settle motors
+}
 
-  void step()
-  {
-    digitalWrite(stepPin, LOW);
-    digitalWrite(stepPin, HIGH);
-  }
+void RPM()
+{
+}
 
-private:
-  int stepPin;
-  int dirPin;
-  int enablePin;
-  int nStepsPerRot;
-};
+// Unit tests
 
-// Define the motors globally
-Stepper motorX(stepPinX, dirPinX, enablePinX, nStepsXperRot);
-Stepper motorY(stepPinY, dirPinY, enablePinY, nStepsYperRot);
+void calibrate_pulley_teeth()
+{
+  spin_degs(90.0, 0);
+  spin_degs(-90.0, 0);
+  spin_degs(0, 90.0);
+  spin_degs(0, -90.0);
+}
+
+void test_spin_degs_multi()
+{
+  spin_degs(90, -90);
+  spin_degs(-90, 90);
+  spin_degs(180, -180);
+  spin_degs(-180, 180);
+  spin_degs(360, 360);
+  spin_degs(-360, -360);
+}
 
 void setup()
 {
+  // put your setup code here, to run once:
   pinMode(buttonPin, INPUT);
   pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(stepPinX, OUTPUT);
+  pinMode(dirPinX, OUTPUT);
+  pinMode(stepPinY, OUTPUT);
+  pinMode(dirPinY, OUTPUT);
+  pinMode(enablePinX, OUTPUT);
+  pinMode(enablePinY, OUTPUT);
   Serial.begin(9600);
   Serial.print("--\nHello\n--");
-  Serial.println(nStepsXperRot);
 
-  motorX.wake(false);
-  motorY.wake(false);
+  wake(false, false);
 }
 
 void loop()
 {
   buttonState = digitalRead(buttonPin);
-  motorX.wake(false);
-  motorY.wake(false);
-  motorX.setDirection(false);
-  motorY.setDirection(true);
+
+  wake(false, false);
+
   if (buttonState == HIGH)
   {
-    int speedX = 50;
-    int speedY = 4;
     digitalWrite(LED_BUILTIN, HIGH);
-    unsigned long IntervalX = (6e7 / speedX) / nStepsXperRot;
-    unsigned long IntervalY = (6e7 / speedY) / nStepsYperRot;
-
-
-    for (int i = 0; i < 10000; i++)
-    {
-      motorX.wake(true);
-      motorY.wake(true);
-      motorX.step();
-      motorY.step();
-      //      Serial.print("Stepping - interval: ");
-      //      Serial.print(IntervalX);
-      //      Serial.print(" - step: ");
-//            Serial.println(i);
-      delayMicroseconds(IntervalX);
-    }
+    wake(true, true);
+    calibrate_pulley_teeth();
+    test_spin_degs_multi();
+//    spin_continuous();
   }
-
-  digitalWrite(LED_BUILTIN, LOW);
-  delay(10); // Wait a second
 }
