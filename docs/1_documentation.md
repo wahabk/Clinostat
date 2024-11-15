@@ -76,4 +76,4 @@ This is a very simple arduino circuit with a button and 2 stepper motor controll
 
 TODO add quiet motor controller
 
-![Clinostat circuit.](images/openclino_circuit.png "Circuit diagram. Made with Cirkit Designer.")
+![Clinostat circuit.](images/openclino_circuit_diagram.png "Circuit diagram. Made with Cirkit Designer.")
