@@ -1,5 +1,9 @@
 # OpenClino
 
+It is very difficult to access a 3D clinostat, there are some companies that sell it but can be prohibitively expensive for gravity research. OpenClino can be built for £100 using off the shelf parts. OpenClino can run in continuous clinorotation or as a Random Positioning Machine (RPM).
+
+This is a side project for me and is very much work in progress.
+
 ## Contents list
 
 - [`Bill of Materials`](2_BOM.md)

@@ -198,7 +198,6 @@ void test_spin_degs_multi()
 
 void setup()
 {
-  // put your setup code here, to run once:
   pinMode(buttonPin, INPUT);
   pinMode(LED_BUILTIN, OUTPUT);
   pinMode(stepPinX, OUTPUT);
@@ -208,8 +207,7 @@ void setup()
   pinMode(enablePinX, OUTPUT);
   pinMode(enablePinY, OUTPUT);
   Serial.begin(9600);
-  Serial.print("--\nHello\n--");
-
+  Serial.print("--\nHello from OpenClino.\n--");
   wake(false, false);
 }
 
@@ -217,6 +215,7 @@ void loop()
 {
   buttonState = digitalRead(buttonPin);
 
+  // Turn off motors when button is not pressed.
   wake(false, false);
 
   if (buttonState == HIGH)
@@ -225,6 +224,9 @@ void loop()
     wake(true, true);
     calibrate_pulley_teeth();
     test_spin_degs_multi();
-//    spin_continuous();
+    // uncomment to run continuous spin
+    // spin_continuous();
+    // uncomment to run RPM
+    // RPM();
   }
 }
