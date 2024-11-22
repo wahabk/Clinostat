@@ -31,12 +31,7 @@ which is x and y
 
 ## Code
 
-The code is work in progress, it requires the following:
-
-- control multiple motors separately.
-- acceleration.
-- docs.
-- Implementing the airbus algorithm for variable G.
+[OpenClino Documentation.](4_code_documentation.md)
 
 ### Usage
 
@@ -61,7 +56,5 @@ Don't forget to set the output pins for you motor controllers!
 # Circuit design
 
 This is a very simple arduino circuit with a button and 2 stepper motor controllers.
-
-TODO add quiet motor controller
 
 ![Clinostat circuit.](images/openclino_circuit_diagram.png "Circuit diagram. Made with Cirkit Designer.")
