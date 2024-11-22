@@ -42,12 +42,6 @@ void loop() {
 
 Don't forget to set the output pins for you motor controllers!
 
-## Collaboration
-
-Please contact me on LinkedIn or raise an issue.
-
-I would be happy to collaborate on this.
-
 ## Contributors
 
 [Dan Dragomirescu @dragomda](https://github.com/dragomda)
