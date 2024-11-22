@@ -1,4 +1,4 @@
-# Arduino Stepper Motor Control Documentation
+# OpenClino Documentation
 
 This document provides reference information about the functions used to control stepper motors in the Arduino project. Each function is described with its purpose, parameters, and behavior.
 
