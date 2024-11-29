@@ -1,5 +1,5 @@
 
-# Version 0.2 DATE
+# Version 0.2.0 29/11/2024
 
 - Changed pulley diameters to pulley teeth
 - Added `float epsilon` for calibrating substeps.
@@ -8,6 +8,6 @@
 - updated `spin_degs()` if statements and compensation.
 - Added unit tests `calibrate_pulley_teeth()` and `test_spin_degs_multi()`.
 
-# Version 0.1 22/11/2024
+# Version 0.1.0 22/11/2024
 
 Initial release. Development till 22/11/2024.

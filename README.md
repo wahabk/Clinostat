@@ -7,7 +7,7 @@ Open-source 3D clinostat. A clinostat is a small scale [microgravity simulator](
 
 This is based on the European Space Agency's work, specifically on [Jack Van Loon's clinorotation work](https://doi.org/10.3389/fpls.2019.01577).
 
-OpenClino is designed to be simple, accessible, affordable, and **reliable**. It is designed to make use of 3D printing's strengths and requires *no machining* and minimum tools. To build OpenClino all non-printed parts are available off the shelf, mainly 3d printer stepper motors, belts, controllers, and skateboard bearings. All these parts are rated for thousands of hours of operation, and I have fully tested OpenClino to run for a minimum of 100.
+OpenClino is designed to be simple, accessible, affordable, and **reliable**. It is designed to make use of 3D printing's strengths and requires *no machining* and minimum tools. To build OpenClino all non-printed parts are available off the shelf, mainly 3d printer stepper motors, belts, controllers, and skateboard bearings. All these parts are rated for thousands of hours of operation, and I have fully tested OpenClino to run for a minimum of 100 hours.
 
 ## Documentation
 
@@ -15,7 +15,7 @@ OpenClino is designed to be simple, accessible, affordable, and **reliable**. It
 
 I have provided:
 
-- Docs in [`docs/1_.md/`](docs/1_documentation.md) including circuit diagram.
+- Docs in [`docs/1_documentation.md/`](docs/1_documentation.md) including circuit diagram.
 - Code in [`src/`](src/openclino.ino)
 - 3D print files as .3MF in [`3d_files/`](3d_files/)
 - Bill of materials in [`docs/2_BOM.md/`](docs/2_BOM.md/)
