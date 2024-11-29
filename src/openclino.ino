@@ -174,6 +174,7 @@ void spin_degs(float degX, float degY, float speedX = 10, float speedY = 10, int
 
 void RPM()
 {
+  spin_degs(random(-360, 360), random(-360, 360));
 }
 
 // Unit tests
