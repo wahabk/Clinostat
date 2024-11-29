@@ -7,27 +7,20 @@ Open-source 3D clinostat. A clinostat is a small scale [microgravity simulator](
 
 This is based on the European Space Agency's work, specifically on [Jack Van Loon's clinorotation work](https://doi.org/10.3389/fpls.2019.01577).
 
-It is very difficult to access a 3D clinostat, there are some companies that sell it but can be prohibitively expensive for gravity research. OpenClino can be built for £100 using off the shelf parts. OpenClino can run in continuous clinorotation or as a Random Positioning Machine (RPM).
-
-This is a side project for me and is very much work in progress.
-
-OpenClino is designed to be simple, accessible, affordable, and **reliable**. It is designed to make use of 3D printing's strengths and requires *no machining* and minimum tools. To build OpenClino all non-printed parts are available off the shelf, mainly 3d printer stepper motors, belts, controllers, and skateboard bearings. All these parts are rated for thousands of hours of operation, and I have fully tested OpenClino to run for a minimum of 100 hrs without fault.
+OpenClino is designed to be simple, accessible, affordable, and **reliable**. It is designed to make use of 3D printing's strengths and requires *no machining* and minimum tools. To build OpenClino all non-printed parts are available off the shelf, mainly 3d printer stepper motors, belts, controllers, and skateboard bearings. All these parts are rated for thousands of hours of operation, and I have fully tested OpenClino to run for a minimum of 100 hours.
 
 ## Documentation
 
 <img src="docs/images/build_guide/0_exploded_view.jpg" alt="Clinostat build!" width="400"/>
 
 I have provided:
-- Docs in [`docs/1_.md/`](docs/1_documentation.md)
+
+- Docs in [`docs/1_documentation.md/`](docs/1_documentation.md) including circuit diagram.
 - Code in [`src/`](src/openclino.ino)
 - 3D print files as .3MF in [`3d_files/`](3d_files/)
 - Bill of materials in [`docs/2_BOM.md/`](docs/2_BOM.md/)
 - Build guide in [`docs/3_build_guide.md/`](docs/3_build_guide.md/)
-
-I will provide (TODO):
-
-- code documentation.
-
+- Code documentation in [`docs/4_code_documentation.md/`](docs/4_code_documentation.md/)
 
 ## Quick Usage
 
@@ -41,7 +34,6 @@ void loop() {
 
 Or to run as a random positioning machine, this will run a random walk routine as specified in ESA's work:
 
-
 ```cpp
 void loop() {
     RPM();
@@ -49,12 +41,6 @@ void loop() {
 ```
 
 Don't forget to set the output pins for you motor controllers!
-
-## Collaboration
-
-Please contact me on LinkedIn or raise an issue.
-
-I would be happy to collaborate on this.
 
 ## Contributors
 

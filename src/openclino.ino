@@ -1,7 +1,4 @@
-// Define steps per revolution
-const int motorSteps = 200;
-const int subStep = 16;
-const unsigned long stepsPerRevolution = motorSteps * subStep;
+#include <AccelStepper.h>
 
 // pins
 const int buttonPin = 2;
@@ -12,18 +9,36 @@ const int enablePinY = 6;
 const int stepPinY = 7;
 const int dirPinY = 8;
 
-// pulley diameters
-const float xMotD = 9.5;
-const float xPulleyD = 31.5;
-const float yMotD = 9.5;
-const float yTurnD = 31.5;
-const float yPulleyD = 18.5;
-const double xRatio = xMotD / xPulleyD; // diameters
-const double yRatio = yMotD / yPulleyD;
-const int nStepsXperRot = stepsPerRevolution / xRatio;
-const int nStepsYperRot = stepsPerRevolution / yRatio;
+// Define steps per revolution
+const int motorSteps = 200;
+const int subStep = 16;
+const unsigned long stepsPerRevolution = motorSteps * subStep;
+// eposilon to fix discrepancy between motor substeps
+// set to 1 to undo calibration.
+const double epsilon = 1.5;
+
+// Pulley teeth
+const float xMotTeeth = 16;
+const float xPulleyTeeth = 50;
+const float yMotTeeth = 16;
+const float yTurnTeeth = 50;
+const float yPulleyTeeth = 20;
+
+// Calculate the gear ratios based on pulley teeth
+const double xRatio = xPulleyTeeth / xMotTeeth;
+const double yRatio1 = yTurnTeeth / yMotTeeth;
+const double yRatio2 = yPulleyTeeth / yTurnTeeth;
+const double yRatio = yRatio1 * yRatio2 * epsilon;
+
+// Calculate effective steps per rotation
+const double nStepsPerRotX = stepsPerRevolution * xRatio;
+const double nStepsPerRotY = stepsPerRevolution * yRatio;
 
 int buttonState = 0;
+
+// Define AccelStepper objects for X and Y axes
+AccelStepper stepperX(1, stepPinX, dirPinX);
+AccelStepper stepperY(1, stepPinY, dirPinY);
 
 void wake(bool x, bool y)
 {
@@ -69,194 +84,92 @@ void yClockwise(bool foo)
   }
 }
 
-// function to continuous spin x and y given <runTime> and rpm where if 0 keep still
-// function to spin <degX, degY> and <rpms>
-// void spin_degs():
-// think about smoothing
-
-void spin_continuous(int t = 1, float speedX = 10, float speedY = 10, int finalDelay = 100)
+void spin_continuous(float speedRPMX = 60, float speedRPMY = 60, int finalDelay = 100)
 {
-  bool xClock;
-  bool yClock;
+  // Convert RPM to steps per second for speed settings
+  double speedX = (speedRPMX * nStepsPerRotX) / 60.0;
+  double speedY = (speedRPMY * nStepsPerRotY) / 60.0;
 
-  if (speedX >= 0)
+  // Set speeds and accelerations for each motor
+  stepperX.setMaxSpeed(speedX);
+  stepperY.setMaxSpeed(speedY);
+  stepperX.setAcceleration(speedX * 2); // Adjust acceleration factor as needed
+  stepperY.setAcceleration(speedY * 2);
+
+  delay(1000); // Final delay to settle motors
+
+  // set motors to run until button is pressed
+  while (buttonState == LOW)
   {
-    xClock = true;
-  }
-  else
-  {
-    xClock = false;
-  }
-  if (speedY >= 0)
-  {
-    yClock = true;
-  }
-  else
-  {
-    yClock = false;
+    stepperX.runSpeed();
+    stepperY.runSpeed();
+    stepperX.run();
   }
 
-  long IntervalX = (6e7 / speedX) / nStepsXperRot;
-  long IntervalY = (6e7 / speedY) / nStepsYperRot;
-  unsigned long stepsY = 0;
+  // Optionally, stop the motors after the button is pressed
+  stepperX.stop();
+  stepperY.stop();
+}
+
+void spin_degs(float degX, float degY, float speedX = 10, float speedY = 10, int finalDelay = 100)
+{
+  // This function is perfect without accel
+  // Initialize motor direction based on target degrees
+  bool xClock = (degX >= 0);
+  bool yClock = (degY >= 0);
+
+  // Calculate steps needed for each axis based on degree input
+  int nStepsX = nStepsPerRotX * abs(degX / 360.0);
+  int nStepsY = nStepsPerRotY * abs(static_cast<float>(degY) / 360.0);
+
+  // Determine intervals for each motor based on speed
+  long intervalX = (6e7 / speedX) / nStepsPerRotX;
+  long intervalY = (6e7 / speedY) / nStepsPerRotY;
+
+  // Initialize step counters and timing variables
   unsigned long stepsX = 0;
+  unsigned long stepsY = 0;
   unsigned long previousTimeX = micros();
   unsigned long previousTimeY = micros();
 
-  while (true)
+  while (stepsX < nStepsX || stepsY < nStepsY)
   {
-    unsigned long currentTimeX = micros();
-    unsigned long currentTimeY = micros();
-    bool xGo = false; // whether to step x
-    bool yGo = false; // whether to step y
+    unsigned long currentTime = micros();
     bool skipCompensation = false;
 
-    digitalWrite(stepPinX, HIGH);
-    digitalWrite(stepPinY, HIGH);
-
-    if (currentTimeX - previousTimeX > IntervalX)
+    // Check if it's time to move motor X
+    if ((currentTime - previousTimeX > intervalX) && (stepsX < nStepsX))
     {
-      xGo = true;
-    }
-    if (currentTimeY - previousTimeY > IntervalY)
-    {
-      yGo = true;
-    }
-    if (yGo == true && xGo == true && yClock == false && xClock != yClock)
-    {
-      skipCompensation = true;
-    }
-
-    if (xGo)
-    {
+      // Move X motor
       xClockwise(xClock);
       digitalWrite(stepPinX, LOW);
       digitalWrite(stepPinX, HIGH);
-      previousTimeX = currentTimeX;
+      previousTimeX = currentTime;
+      stepsX++;
 
-      if (skipCompensation == false)
+      // Compensation logic: Skip compensation when both axes move, Y motor moves in opposite direction to X
+      if (!(stepsY < nStepsY && (currentTime - previousTimeY > intervalY) && yClock != xClock))
       {
-        yClockwise(!xClock); // spin y motor with x
-
-        digitalWrite(stepPinY, LOW); // compensator
+        // Move Y motor to compensate
+        yClockwise(!xClock);
+        digitalWrite(stepPinY, LOW);
         digitalWrite(stepPinY, HIGH);
       }
-      stepsX++;
     }
 
-    if (yGo)
+    // Check if it's time to move motor Y
+    if ((currentTime - previousTimeY > intervalY) && (stepsY < nStepsY))
     {
+      // Move Y motor
       yClockwise(yClock);
       digitalWrite(stepPinY, LOW);
       digitalWrite(stepPinY, HIGH);
-      previousTimeY = currentTimeY;
+      previousTimeY = currentTime;
       stepsY++;
     }
-    //    if (stepsX >= nStepsX && stepsY >= nStepsY) {keepGoing = false;} // check if finished
-  }
-  delay(finalDelay);
-}
-
-void spin_degs(float degX, float degY, float speedX = 60, float speedY = 60, int finalDelay = 100)
-{
-  //  wake(true, true);
-
-  // define directions because y motor has to constantly change direction to compensate
-  bool xClock;
-  bool yClock;
-
-  if (degX >= 0)
-  {
-    xClock = true;
-  }
-  else
-  {
-    xClock = false;
-  }
-  if (degY >= 0)
-  {
-    yClock = true;
-  }
-  else
-  {
-    yClock = false;
   }
 
-  int nStepsX = nStepsXperRot * abs(degX / 360.); // define fraction of full turn
-  int nStepsY = nStepsYperRot * abs(degY / 360.);
-
-  bool keepGoing = true;
-
-  long IntervalX = (6e7 / speedX) / nStepsXperRot;
-  long IntervalY = (6e7 / speedY) / nStepsYperRot;
-  unsigned long stepsY = 0;
-  unsigned long stepsX = 0;
-  unsigned long previousTimeX = micros();
-  unsigned long previousTimeY = micros();
-
-  while (keepGoing)
-  {
-    unsigned long currentTimeX = micros();
-    unsigned long currentTimeY = micros();
-    bool xGo = false; // whether to step x
-    bool yGo = false; // whether to step y
-    bool skipCompensation = false;
-
-    digitalWrite(stepPinX, HIGH);
-    digitalWrite(stepPinY, HIGH);
-
-    if (currentTimeX - previousTimeX > IntervalX && stepsX <= nStepsX)
-    {
-      xGo = true;
-    }
-    if (currentTimeY - previousTimeY > IntervalY && stepsY <= nStepsY)
-    {
-      yGo = true;
-    }
-    if (yGo == true && xGo == true && yClock == false && xClock != yClock)
-    {
-      skipCompensation = true;
-    }
-
-    if (xGo)
-    {
-      xClockwise(xClock);
-      digitalWrite(stepPinX, LOW);
-      digitalWrite(stepPinX, HIGH);
-      previousTimeX = currentTimeX;
-
-      if (skipCompensation == false)
-      {
-        yClockwise(!xClock); // spin y motor with x
-
-        digitalWrite(stepPinY, LOW); // compensator
-        digitalWrite(stepPinY, HIGH);
-      }
-      stepsX++;
-    }
-
-    if (yGo)
-    {
-      yClockwise(yClock);
-      digitalWrite(stepPinY, LOW);
-      digitalWrite(stepPinY, HIGH);
-      previousTimeY = currentTimeY;
-      stepsY++;
-    }
-    if (stepsX >= nStepsX && stepsY >= nStepsY)
-    {
-      keepGoing = false;
-    } // check if finished
-  }
-  delay(finalDelay);
-}
-
-void show_off()
-{
-  spin_degs(180, 180);
-  spin_degs(-180, -180);
-  spin_degs(-180, 180);
-  spin_degs(180, -180);
+  delay(finalDelay); // Final delay to settle motors
 }
 
 void RPM()
@@ -264,9 +177,28 @@ void RPM()
   spin_degs(random(-360, 360), random(-360, 360));
 }
 
+// Unit tests
+
+void calibrate_pulley_teeth()
+{
+  spin_degs(90.0, 0);
+  spin_degs(-90.0, 0);
+  spin_degs(0, 90.0);
+  spin_degs(0, -90.0);
+}
+
+void test_spin_degs_multi()
+{
+  spin_degs(90, -90);
+  spin_degs(-90, 90);
+  spin_degs(180, -180);
+  spin_degs(-180, 180);
+  spin_degs(360, 360);
+  spin_degs(-360, -360);
+}
+
 void setup()
 {
-  // put your setup code here, to run once:
   pinMode(buttonPin, INPUT);
   pinMode(LED_BUILTIN, OUTPUT);
   pinMode(stepPinX, OUTPUT);
@@ -276,8 +208,7 @@ void setup()
   pinMode(enablePinX, OUTPUT);
   pinMode(enablePinY, OUTPUT);
   Serial.begin(9600);
-  Serial.print("--\nHello\n--");
-
+  Serial.print("--\nHello from OpenClino.\n--");
   wake(false, false);
 }
 
@@ -285,17 +216,18 @@ void loop()
 {
   buttonState = digitalRead(buttonPin);
 
+  // Turn off motors when button is not pressed.
   wake(false, false);
 
   if (buttonState == HIGH)
   {
     digitalWrite(LED_BUILTIN, HIGH);
     wake(true, true);
-    spin_continuous(1, 60, 60);
-    //  show_off();
-    //  RPM();
+    calibrate_pulley_teeth();
+    test_spin_degs_multi();
+    // uncomment to run continuous spin
+    // spin_continuous();
+    // uncomment to run RPM
+    // RPM();
   }
-
-  digitalWrite(LED_BUILTIN, LOW);
-  delay(10); // Wait a second
 }

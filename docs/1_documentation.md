@@ -1,5 +1,9 @@
 # OpenClino
 
+It is very difficult to access a 3D clinostat, there are some companies that sell it but can be prohibitively expensive for gravity research. OpenClino can be built for £100 using off the shelf parts. OpenClino can run in continuous clinorotation or as a Random Positioning Machine (RPM).
+
+This is a side project for me and is very much work in progress.
+
 ## Contents list
 
 - [`Bill of Materials`](2_BOM.md)
@@ -9,45 +13,19 @@
   - [Notation](#notation)
   - [Code](#code)
 
-## Design requirements
+## Convention & Definitions
 
-Clinostats are usually used in biology for plants, cell cultures, and small animals such as fish.
-
-1. OpenClino shall be robust to failures to not harm the animals or samples. 
-2. Openclino must be simple, accessible, and affordable, requiring no machining.
-3. OpenClino should operate in hot and humid environments such as incubators.
-4. OpenClino should operate as a clinostat or RPM.
-
-At the moment it is a work in progress.
-I'm not an electrical engineer so this is 12v. Be careful with your electronics. 
-At the moment it functions as a clino but not a true RPM. The motors can't start a new direction or speed independently.
-You can buy waterproof nema17s and have the electronics outside of the incubator if needed.
-
-TODO material requirements
-
-## Notation
-TODO make a figure defining part names
-
-Definitions:
-motor_pulley
-x_pulley
-y_pulley
-m2y pulley
-y_turn
-y_turn_pulley
-y_guide
-motor_mount
-motor_enclosure
-which is x and y
-
+- X body is the external larger square. 
+- Y body is the internal smaller body.
+- Motor pulleys attach to the motor.
+- X/Y pulleys attach to the body.
+- The "`m2y`" pulley is the one with 2 belts attached.
+- The "`y_turn`" is the bearings bending the long y belt.
+- The "`y_guide`" is the L shaped bracket holding the y pulley.
 
 ## Code
 
-The code is work in progress, it requires the following:
- - control multiple motors separately.
- - acceleration.
- - docs.
- - Implementing the airbus algorithm for variable G.
+[OpenClino Documentation.](4_code_documentation.md)
 
 ### Usage
 
@@ -61,7 +39,6 @@ void loop() {
 
 Or to run as a random positioning machine, this will run a random walk routine as specified in ESA's work:
 
-
 ```cpp
 void loop() {
     RPM();
@@ -70,3 +47,8 @@ void loop() {
 
 Don't forget to set the output pins for you motor controllers!
 
+# Circuit design
+
+This is a very simple arduino circuit with a button and 2 stepper motor controllers.
+
+![Clinostat circuit.](images/openclino_circuit_diagram.png "Circuit diagram. Made with Cirkit Designer.")
