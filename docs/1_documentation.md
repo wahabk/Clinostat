@@ -13,21 +13,15 @@ This is a side project for me and is very much work in progress.
   - [Notation](#notation)
   - [Code](#code)
 
-## Notation
+## Convention & Definitions
 
-TODO make a figure defining part names
-
-Definitions:
-motor_pulley
-x_pulley
-y_pulley
-m2y pulley
-y_turn
-y_turn_pulley
-y_guide
-motor_mount
-motor_enclosure
-which is x and y
+- X body is the external larger square. 
+- Y body is the internal smaller body.
+- Motor pulleys attach to the motor.
+- X/Y pulleys attach to the body.
+- The "`m2y`" pulley is the one with 2 belts attached.
+- The "`y_turn`" is the bearings bending the long y belt.
+- The "`y_guide`" is the L shaped bracket holding the y pulley.
 
 ## Code
 
