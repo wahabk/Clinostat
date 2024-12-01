@@ -84,31 +84,87 @@ void yClockwise(bool foo)
   }
 }
 
-void spin_continuous(float speedRPMX = 60, float speedRPMY = 60, int finalDelay = 100)
+void spin_continuous(float speedX = 10, float speedY = 10, int finalDelay = 100)
 {
-  // Convert RPM to steps per second for speed settings
-  double speedX = (speedRPMX * nStepsPerRotX) / 60.0;
-  double speedY = (speedRPMY * nStepsPerRotY) / 60.0;
+  bool xClock;
+  bool yClock;
 
-  // Set speeds and accelerations for each motor
-  stepperX.setMaxSpeed(speedX);
-  stepperY.setMaxSpeed(speedY);
-  stepperX.setAcceleration(speedX * 2); // Adjust acceleration factor as needed
-  stepperY.setAcceleration(speedY * 2);
-
-  delay(1000); // Final delay to settle motors
-
-  // set motors to run until button is pressed
-  while (buttonState == LOW)
+  if (speedX >= 0)
   {
-    stepperX.runSpeed();
-    stepperY.runSpeed();
-    stepperX.run();
+    xClock = true;
+  }
+  else
+  {
+    xClock = false;
+  }
+  if (speedY >= 0)
+  {
+    yClock = true;
+  }
+  else
+  {
+    yClock = false;
   }
 
-  // Optionally, stop the motors after the button is pressed
-  stepperX.stop();
-  stepperY.stop();
+  long IntervalX = (6e7 / speedX) / nStepsPerRotX;
+  long IntervalY = (6e7 / speedY) / nStepsPerRotY;
+  unsigned long stepsY = 0;
+  unsigned long stepsX = 0;
+  unsigned long previousTimeX = micros();
+  unsigned long previousTimeY = micros();
+
+  while (true)
+  {
+    unsigned long currentTimeX = micros();
+    unsigned long currentTimeY = micros();
+    bool xGo = false; // whether to step x
+    bool yGo = false; // whether to step y
+    bool skipCompensation = false;
+
+    digitalWrite(stepPinX, HIGH);
+    digitalWrite(stepPinY, HIGH);
+
+    if (currentTimeX - previousTimeX > IntervalX)
+    {
+      xGo = true;
+    }
+    if (currentTimeY - previousTimeY > IntervalY)
+    {
+      yGo = true;
+    }
+    if (yGo == true && xGo == true && yClock == false && xClock != yClock)
+    {
+      skipCompensation = true;
+    }
+
+    if (xGo)
+    {
+      xClockwise(xClock);
+      digitalWrite(stepPinX, LOW);
+      digitalWrite(stepPinX, HIGH);
+      previousTimeX = currentTimeX;
+
+      if (skipCompensation == false)
+      {
+        yClockwise(!xClock); // spin y motor with x
+
+        digitalWrite(stepPinY, LOW); // compensator
+        digitalWrite(stepPinY, HIGH);
+      }
+      stepsX++;
+    }
+
+    if (yGo)
+    {
+      yClockwise(yClock);
+      digitalWrite(stepPinY, LOW);
+      digitalWrite(stepPinY, HIGH);
+      previousTimeY = currentTimeY;
+      stepsY++;
+    }
+    //    if (stepsX >= nStepsX && stepsY >= nStepsY) {keepGoing = false;} // check if finished
+  }
+  delay(finalDelay);
 }
 
 void spin_degs(float degX, float degY, float speedX = 10, float speedY = 10, int finalDelay = 100)
@@ -226,7 +282,7 @@ void loop()
     calibrate_pulley_teeth();
     test_spin_degs_multi();
     // uncomment to run continuous spin
-    // spin_continuous();
+    // spin_continuous(4, 20);
     // uncomment to run RPM
     // RPM();
   }
