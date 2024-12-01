@@ -15,7 +15,7 @@ const int subStep = 16;
 const unsigned long stepsPerRevolution = motorSteps * subStep;
 // eposilon to fix discrepancy between motor substeps
 // set to 1 to undo calibration.
-const double epsilon = 1.5;
+const double epsilon = 1;
 
 // Pulley teeth
 const float xMotTeeth = 16;
