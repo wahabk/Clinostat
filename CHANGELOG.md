@@ -1,4 +1,11 @@
 
+# Version 0.2.2 09/02/2025
+
+- Add `diagnose_rotation_error()` to measure `yCorrection`.
+- Restructure to include `openclino.ino` into the folder `openclino/` so arduino IDE.
+- Remove epsilon to `double yCorrection`.
+- update `interval` to double and `currentTime` measurements.
+
 # Version 0.2.1 01/12/2024
 
 - Fix `spin_continuous()` to not use `AccelStepper` and to compensate motors for each other.
