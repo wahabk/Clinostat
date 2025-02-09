@@ -51,4 +51,6 @@ Don't forget to set the output pins for you motor controllers!
 
 This is a very simple arduino circuit with a button and 2 stepper motor controllers.
 
+I base the circuit on [this great article by lastminuteengineers](https://lastminuteengineers.com/a4988-stepper-motor-driver-arduino-tutorial/]).
+
 ![Clinostat circuit.](images/openclino_circuit_diagram.png "Circuit diagram. Made with Cirkit Designer.")

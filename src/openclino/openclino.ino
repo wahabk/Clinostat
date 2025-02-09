@@ -13,9 +13,6 @@ const int dirPinY = 8;
 const int motorSteps = 200;
 const int subStep = 16;
 const unsigned long stepsPerRevolution = motorSteps * subStep;
-// eposilon to fix discrepancy between motor substeps
-// set to 1 to undo calibration.
-const double epsilon = 1;
 
 // Pulley teeth
 const float xMotTeeth = 16;
@@ -24,21 +21,18 @@ const float yMotTeeth = 16;
 const float yTurnTeeth = 50;
 const float yPulleyTeeth = 20;
 
-// Calculate the gear ratios based on pulley teeth
-const double xRatio = xPulleyTeeth / xMotTeeth;
-const double yRatio1 = yTurnTeeth / yMotTeeth;
-const double yRatio2 = yPulleyTeeth / yTurnTeeth;
-const double yRatio = yRatio1 * yRatio2 * epsilon;
+// Calculate the gear ratios based on pulley teeth and calibration factor
+const double xRatio = xPulleyTeeth / xMotTeeth; // 3.125
+const double yRatio1 = yTurnTeeth / yMotTeeth;  // 50 / 16 = 3.125
+const double yRatio2 = yPulleyTeeth / yTurnTeeth; // 20 / 50 = 0.4
+const double yCorrection = 1.5; // Found from calibration using diagnose_rotation_error()
+const double yRatio = yRatio1 * yRatio2 * yCorrection;
 
 // Calculate effective steps per rotation
 const double nStepsPerRotX = stepsPerRevolution * xRatio;
 const double nStepsPerRotY = stepsPerRevolution * yRatio;
 
 int buttonState = 0;
-
-// Define AccelStepper objects for X and Y axes
-AccelStepper stepperX(1, stepPinX, dirPinX);
-AccelStepper stepperY(1, stepPinY, dirPinY);
 
 void wake(bool x, bool y)
 {
@@ -106,8 +100,10 @@ void spin_continuous(float speedX = 10, float speedY = 10, int finalDelay = 100)
     yClock = false;
   }
 
-  long IntervalX = (6e7 / speedX) / nStepsPerRotX;
-  long IntervalY = (6e7 / speedY) / nStepsPerRotY;
+  double intervalX = (6e7 / speedX) / nStepsPerRotX;
+  double intervalY = (6e7 / speedX) / nStepsPerRotY;
+  long intervalXLong = (long)intervalX;
+  long intervalYLong = (long)intervalY;
   unsigned long stepsY = 0;
   unsigned long stepsX = 0;
   unsigned long previousTimeX = micros();
@@ -117,6 +113,7 @@ void spin_continuous(float speedX = 10, float speedY = 10, int finalDelay = 100)
   {
     unsigned long currentTimeX = micros();
     unsigned long currentTimeY = micros();
+    unsigned long currentTime = micros();
     bool xGo = false; // whether to step x
     bool yGo = false; // whether to step y
     bool skipCompensation = false;
@@ -124,11 +121,11 @@ void spin_continuous(float speedX = 10, float speedY = 10, int finalDelay = 100)
     digitalWrite(stepPinX, HIGH);
     digitalWrite(stepPinY, HIGH);
 
-    if (currentTimeX - previousTimeX > IntervalX)
+    if (currentTime - previousTimeX > intervalXLong)
     {
       xGo = true;
     }
-    if (currentTimeY - previousTimeY > IntervalY)
+    if (currentTime - previousTimeY > intervalYLong)
     {
       yGo = true;
     }
@@ -142,7 +139,7 @@ void spin_continuous(float speedX = 10, float speedY = 10, int finalDelay = 100)
       xClockwise(xClock);
       digitalWrite(stepPinX, LOW);
       digitalWrite(stepPinX, HIGH);
-      previousTimeX = currentTimeX;
+      previousTimeX = currentTime;
 
       if (skipCompensation == false)
       {
@@ -159,7 +156,7 @@ void spin_continuous(float speedX = 10, float speedY = 10, int finalDelay = 100)
       yClockwise(yClock);
       digitalWrite(stepPinY, LOW);
       digitalWrite(stepPinY, HIGH);
-      previousTimeY = currentTimeY;
+      previousTimeY = currentTime;
       stepsY++;
     }
     //    if (stepsX >= nStepsX && stepsY >= nStepsY) {keepGoing = false;} // check if finished
@@ -175,12 +172,14 @@ void spin_degs(float degX, float degY, float speedX = 10, float speedY = 10, int
   bool yClock = (degY >= 0);
 
   // Calculate steps needed for each axis based on degree input
-  int nStepsX = nStepsPerRotX * abs(degX / 360.0);
-  int nStepsY = nStepsPerRotY * abs(static_cast<float>(degY) / 360.0);
+//  int nStepsX = nStepsPerRotX * abs(degX / 360.0);
+//  int nStepsY = nStepsPerRotY * abs(static_cast<float>(degY) / 360.0);
+  long nStepsX = round(nStepsPerRotX * abs(degX / 360.0));
+  long nStepsY = round(nStepsPerRotY * abs(degY / 360.0));
 
   // Determine intervals for each motor based on speed
-  long intervalX = (6e7 / speedX) / nStepsPerRotX;
-  long intervalY = (6e7 / speedY) / nStepsPerRotY;
+  long intervalX = (6e7 / speedX) / (double)nStepsPerRotX;
+  long intervalY = (6e7 / speedY) / (double)nStepsPerRotY;
 
   // Initialize step counters and timing variables
   unsigned long stepsX = 0;
@@ -253,6 +252,38 @@ void test_spin_degs_multi()
   spin_degs(-360, -360);
 }
 
+void diagnose_rotation_error() {
+  Serial.println("Starting rotation diagnostic...");
+  
+  // Step 1: Test X-Axis Rotation
+  Serial.println("Rotating X-Axis by 360°...");
+  spin_degs(360, 0);
+  delay(1000); // Wait for movement to stop
+  
+  // Step 2: Test Y-Axis Rotation
+  Serial.println("Rotating Y-Axis by 360°...");
+  spin_degs(0, 360);
+  delay(1000); // Wait for movement to stop
+
+  // Step 3: Ask User to Measure Actual Y-Axis Rotation
+  Serial.println("\n⚠️  Please measure how much the Y-axis actually rotated.");
+  Serial.println("  - If it moved LESS than 360°, divide 360 by actual movement.");
+  Serial.println("  - Example: If Y moved only 240°, then correction = 360 / 240 = 1.5.");
+  Serial.println("\nEnter measured Y rotation in degrees: ");
+  
+  while (Serial.available() == 0) {
+    // Wait for user input
+  }
+
+  float measuredY = Serial.parseFloat(); // Read user input
+  float correctionFactor = 360.0 / measuredY;
+
+  Serial.println("\n✅ Diagnostic Complete!");
+  Serial.print("  - Measured Y Rotation: "); Serial.print(measuredY); Serial.println("°");
+  Serial.print("  - Suggested Correction Factor: "); Serial.println(correctionFactor);
+  Serial.print("  - Suggested yRatio: "); Serial.print(yRatio * correctionFactor); Serial.println("\n");
+}
+
 void setup()
 {
   pinMode(buttonPin, INPUT);
@@ -279,10 +310,11 @@ void loop()
   {
     digitalWrite(LED_BUILTIN, HIGH);
     wake(true, true);
-    calibrate_pulley_teeth();
-    test_spin_degs_multi();
+    // diagnose_rotation_error();
+    // calibrate_pulley_teeth();
+    // test_spin_degs_multi();
     // uncomment to run continuous spin
-    // spin_continuous(4, 20);
+     spin_continuous(20, 20);
     // uncomment to run RPM
     // RPM();
   }
