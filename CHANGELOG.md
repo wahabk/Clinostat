@@ -1,4 +1,17 @@
 
+# Version 0.3.0 22/02/2025
+
+- Major refactor. `spin_degs()` and `spin_continuous()` now precompute compensation instead of relying on if statements.
+- `calibrate_y_correction()` added to measure `yCorrection` using user input.
+- `clockwise` functions removed for direction pin handling.
+- `RPM()` removed for now.
+- Representative docs updates.
+
+- Add `diagnose_rotation_error()` to measure `yCorrection`.
+- Restructure to include `openclino.ino` into the folder `openclino/` so arduino IDE.
+- Remove epsilon to `double yCorrection`.
+- update `interval` to double and `currentTime` measurements.
+
 # Version 0.2.2 09/02/2025
 
 - Add `diagnose_rotation_error()` to measure `yCorrection`.
