@@ -5,7 +5,7 @@
 - `calibrate_y_correction()` added to measure `yCorrection` using user input.
 - `clockwise` functions removed for direction pin handling.
 - `RPM()` removed for now.
-- Representative docs updates.
+- General docs updates.
 
 # Version 0.2.2 09/02/2025
 
