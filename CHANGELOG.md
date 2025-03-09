@@ -1,4 +1,12 @@
 
+# Version 0.3.0 22/02/2025
+
+- Major refactor. `spin_degs()` and `spin_continuous()` now precompute compensation instead of relying on if statements.
+- `calibrate_y_correction()` added to measure `yCorrection` using user input.
+- `clockwise` functions removed for direction pin handling.
+- `RPM()` removed for now.
+- General docs updates.
+
 # Version 0.2.2 09/02/2025
 
 - Add `diagnose_rotation_error()` to measure `yCorrection`.

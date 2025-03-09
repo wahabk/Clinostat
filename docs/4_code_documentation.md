@@ -1,51 +1,51 @@
 # OpenClino Documentation
 
-This document provides reference information about the functions used to control stepper motors in the Arduino project. Each function is described with its purpose, parameters, and behavior.
+This document provides reference information about the functions used to control stepper motors in the Arduino project. Each function is described with its purpose, parameters, and behavior. The documentation is generated using AI.
 
 ## Functions
 
-### `void yClockwise(bool foo)`
+### `void enable(bool enableX, bool enableY)`
 
-Sets the direction of the Y-axis motor.
+Enables or disables the X and Y motors.
 
 - **Parameters:**
-  - `foo` (bool): If `true`, sets the direction to clockwise; if `false`, sets it to counterclockwise.
+  - `enableX` (bool): If `true`, enables the X-axis motor; if `false`, disables it.
+  - `enableY` (bool): If `true`, enables the Y-axis motor; if `false`, disables it.
 
 ---
 
-### `void spin_continuous(float speedRPMX = 60, float speedRPMY = 60, int finalDelay = 100)`
+### `void spin_continuous(float speedX = 10, float speedY = 10, int buttonDelay = 1000)`
 
 Spins the X and Y motors continuously at specified speeds until a button is pressed.
 
 - **Parameters:**
-  - `speedRPMX` (float, default = 60): Speed of the X-axis motor in RPM.
-  - `speedRPMY` (float, default = 60): Speed of the Y-axis motor in RPM.
-  - `finalDelay` (int, default = 100): Delay in milliseconds after stopping the motors.
+  - `speedX` (float, default = 10): Speed of the X-axis motor in RPM.
+  - `speedY` (float, default = 10): Speed of the Y-axis motor in RPM.
+  - `buttonDelay` (int, default = 1000): Delay in milliseconds after stopping the motors.
 
 ---
 
-### `void spin_degs(float degX, float degY, float speedX = 10, float speedY = 10, int finalDelay = 100)`
+### `void spin_degs(float Q1_target, float Q2_target, float maxRPM = 10, int finalDelay = 100)`
 
 Spins the X and Y motors by specified degrees at specified speeds.
 
 - **Parameters:**
-  - `degX` (float): Degrees to rotate the X-axis motor.
-  - `degY` (float): Degrees to rotate the Y-axis motor.
-  - `speedX` (float, default = 10): Speed of the X-axis motor in RPM.
-  - `speedY` (float, default = 10): Speed of the Y-axis motor in RPM.
+  - `Q1_target` (float): Degrees to rotate the X-axis motor.
+  - `Q2_target` (float): Degrees to rotate the Y-axis motor.
+  - `maxRPM` (float, default = 10): Maximum speed of the motors in RPM.
   - `finalDelay` (int, default = 100): Delay in milliseconds after stopping the motors.
 
 ---
 
-### `void RPM()`
+### `void calibrate_y_correction()`
 
-Placeholder function for future implementation.
+Calibrates the Y-axis correction factor by rotating the Y-axis motor and measuring the actual rotation.
 
 ---
 
-### `void calibrate_pulley_teeth()`
+### `void test_pulley_ratios()`
 
-Calibrates the pulley teeth by rotating the motors in specific patterns.
+Tests the pulley ratios by rotating the X and Y motors by 360 degrees and back.
 
 ---
 

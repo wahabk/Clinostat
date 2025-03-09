@@ -17,10 +17,10 @@ I have provided:
 
 - Docs in [`docs/1_documentation.md/`](docs/1_documentation.md) including circuit diagram.
 - Code in [`src/`](src/openclino.ino)
+- Code documentation in [`docs/4_code_documentation.md/`](docs/4_code_documentation.md/)
 - 3D print files as .3MF in [`3d_files/`](3d_files/)
 - Bill of materials in [`docs/2_BOM.md/`](docs/2_BOM.md/)
 - Build guide in [`docs/3_build_guide.md/`](docs/3_build_guide.md/)
-- Code documentation in [`docs/4_code_documentation.md/`](docs/4_code_documentation.md/)
 
 ## Quick Usage
 
@@ -33,6 +33,9 @@ void loop() {
 ```
 
 Or to run as a random positioning machine, this will run a random walk routine as specified in ESA's work:
+
+> [!WARNING]  
+> The RPM function is work-in-progress.
 
 ```cpp
 void loop() {
