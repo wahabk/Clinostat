@@ -43,7 +43,8 @@ Ensure you have all the parts from the [Bill of Materials](2_BOM.md).
 
 a) Place the washers between the bolthead/nut and the bearing.
 
->[!NOTE] Don't tighten the nuts too much as this will introduce a lot of unwanted friction.
+>[!NOTE]
+> Don't tighten the nuts too much as this will introduce a lot of unwanted friction.
 
 <img src="images/build_guide/1_y_turn.jpg" alt="y_turn" width="400"/>
 
@@ -59,13 +60,15 @@ b) Install bolts through the x and y body, make sure to put a washer on each sid
 
 c) Install y_pulley and y_guide, with washers in between. 
    
->[!NOTE] Remember to add the y belt before the nut!
+>[!NOTE]
+> Remember to add the y belt before the nut!
 
 The hex nuts can be push fit into the x body.
 
 Tighten the y_pulley grub screw so that it rotates with the y body.
 
->[!CAUTION] the grub screw design of the y pully relies on a threaded insert that needs to be installed with a soldering iron. I will endeavor to make one that has a normal hex nut.
+>[!CAUTION]
+> the grub screw design of the y pully relies on a threaded insert that needs to be installed with a soldering iron. I will endeavor to make one that has a normal hex nut.
 
 <img src="images/build_guide/3_y_guide.jpg" alt="combine" width="400"/>
 
@@ -85,7 +88,8 @@ a) x_pulley: push fit the x pulley into the body, and place washers in for now. 
 
 b) m2y pulley: push fit two bearings into the m2y pulley and add washers for now.
    
->[!NOTE] The tricky part here is making sure the long belt doesnt scrape the motor like step 5e, so remember to keep the wider part of the m2y close to the x body, and place 2 or 3washers between the x body and the m2y pulley.
+>[!NOTE]
+> The tricky part here is making sure the long belt doesnt scrape the motor like step 5e, so remember to keep the wider part of the m2y close to the x body, and place 2 or 3washers between the x body and the m2y pulley.
 
 <img src="images/build_guide/4_m2y.jpg" alt="combine" width="400"/>
 
