@@ -1,4 +1,8 @@
 
+# Version 0.3.1 15/03/2025
+
+- Check for `NULL` input in `calibrate_y_correction()`.
+
 # Version 0.3.0 22/02/2025
 
 - Major refactor. `spin_degs()` and `spin_continuous()` now precompute compensation instead of relying on if statements.
