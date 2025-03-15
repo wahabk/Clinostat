@@ -171,6 +171,12 @@ void calibrate_y_correction()
   spin_degs(0, -360);
 
   float measuredY = Serial.parseFloat(); // Read user input
+
+  if (measuredY == NULL) {
+    Serial.println("\n❌ Error, you did not enter anything. Exiting calibration."); 
+    return(1);
+  }
+  
   yCorrection = 360.0 / measuredY;
   yRatio = yRatio1 * yRatio2 * yCorrection;
   nStepsPerRotY = stepsPerRevolution * yRatio;
