@@ -1,11 +1,17 @@
 
+# Version 0.4.0 XX/05/2025
+
+- Restructure to modular code `openclino.h`, `openclino.cpp`, and `openclino.ino`.
+- Remove raspberry_pi IMU code.
+- Add `.gitignore`.
+
 # Version 0.3.1 15/03/2025
 
 - Check for `NULL` input in `calibrate_y_correction()`.
 
 # Version 0.3.0 22/02/2025
 
-- Major refactor. `spin_degs()` and `spin_continuous()` now precompute compensation instead of relying on if statements.
+- Major refactor to functions `spin_degs()` and `spin_continuous()` now precompute compensation instead of relying on if statements.
 - `calibrate_y_correction()` added to measure `yCorrection` using user input.
 - `clockwise` functions removed for direction pin handling.
 - `RPM()` removed for now.

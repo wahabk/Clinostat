@@ -32,17 +32,6 @@ void loop() {
 }
 ```
 
-Or to run as a random positioning machine, this will run a random walk routine as specified in ESA's work:
-
-> [!WARNING]  
-> The RPM function is work-in-progress.
-
-```cpp
-void loop() {
-    RPM();
-}
-```
-
 Don't forget to set the output pins for you motor controllers!
 
 ## Contributors
