@@ -1,13 +1,13 @@
-// openclino.cpp
-#include "openclino.h"
-#include <Arduino.h>
-
 /*
  * OpenClino
  * 
  * X is the outer frame.
  * Y is the inner frame.
  */
+#include <Arduino.h>
+#include "openclino.h"
+#include <SPI.h>
+#include <SD.h>
 
 // 🛠 Motor & Button Pins
 const int buttonPin = 2;
@@ -42,6 +42,38 @@ double yRatio = yRatio1 * yRatio2 * yCorrection;
 const double nStepsPerRotX = stepsPerRevolution * xRatio;
 double nStepsPerRotY = stepsPerRevolution * yRatio;
 
+// SD definitions
+const char* PATH_FILENAME = "path.txt";
+
+void setupPins() {
+  // Input pins
+  pinMode(buttonPin, INPUT);
+  // Built-in LED
+  pinMode(LED_BUILTIN, OUTPUT);
+  // X-axis motor pins
+  pinMode(stepPinX, OUTPUT);
+  pinMode(dirPinX, OUTPUT);
+  pinMode(enablePinX, OUTPUT);
+  // Y-axis motor pins
+  pinMode(stepPinY, OUTPUT);
+  pinMode(dirPinY, OUTPUT);
+  pinMode(enablePinY, OUTPUT);
+}
+
+void setupSerial() {
+  Serial.begin(9600);
+  Serial.print("--\nHello from OpenClino.\n--\n");
+  // Print gear ratios and steps information
+  Serial.print("xRatio: ");
+  Serial.println(xRatio);
+  Serial.print("yRatio: ");
+  Serial.println(yRatio);
+  Serial.print("nStepsPerRotX: ");
+  Serial.println(nStepsPerRotX);
+  Serial.print("nStepsPerRotY: ");
+  Serial.println(nStepsPerRotY);
+  Serial.print("--\n");
+}
 
 // 🏁 Enable or disable motors
 void enable(bool enableX, bool enableY) {
