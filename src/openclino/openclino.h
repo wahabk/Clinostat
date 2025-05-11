@@ -57,5 +57,6 @@ void spin_continuous(float speedX = 10, float speedY = 10, int buttonDelay = 100
 void calibrate_y_correction();
 void test_pulley_ratios();
 void test_spin_degs_multi();
+void follow_path();
 
 #endif

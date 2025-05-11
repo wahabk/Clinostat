@@ -33,5 +33,7 @@ void loop()
     test_spin_degs_multi();
     // Uncomment to run continuous spin
     // spin_continuous(10, 10);
+    // Uncomment to run follow_path
+//    follow_path();
   }
 }

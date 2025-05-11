@@ -254,48 +254,56 @@ void test_spin_degs_multi()
 }
 
 // Read and execute path from SD card
-void execute_path() {
-  File pathFile = SD.open(PATH_FILENAME);
+void follow_path() {
+  File pathFile = SD.open("path.txt");
   
   if (pathFile) {
-    Serial.print("Reading path from ");
-    Serial.println(PATH_FILENAME);
+    Serial.print("Reading path from path.txt...\n");
     
-    char buffer[20]; // Buffer to store line data
-    int index = 0;
-    
-    // Read and process each line
+    // Process data lines
     while (pathFile.available()) {
-      char c = pathFile.read();
+      String line = pathFile.readStringUntil('\n');
       
-      if (c == '\n') {
-        // End of line, process the data
-        buffer[index] = '\0'; // Null-terminate
+      // Skip empty lines
+      if (line.length() <= 1) continue;
+      
+      // Parse space-delimited format (x y delay_us)
+      int firstSpace = line.indexOf(' ');
+      int secondSpace = line.indexOf(' ', firstSpace + 1);
+      
+      if (firstSpace > 0 && secondSpace > 0) {
+        float xDeg = line.substring(0, firstSpace).toFloat();
+        float yDeg = line.substring(firstSpace + 1, secondSpace).toFloat();
+        long delayUs = line.substring(secondSpace + 1).toFloat();
         
-        // Parse the space-delimited values
-        char* xStr = strtok(buffer, " ");
-        char* yStr = strtok(NULL, " ");
+        // Debug output
+        Serial.print("Moving to (");
+        Serial.print(xDeg);
+        Serial.print(", ");
+        Serial.print(yDeg);
+        Serial.print(") with delay ");
+        Serial.println(delayUs);
         
-        if (xStr && yStr) {
-          double xDeg = atof(xStr);
-          double yDeg = atof(yStr);
-          
-          // Move to position
-          spin_degs(xDeg, yDeg);
-          delay(50); // Small delay between movements
+        // Move to position
+        spin_degs(xDeg, yDeg);
+        
+        // Wait for the specified delay
+        if (delayUs > 0) {
+          if (delayUs > 16383) {
+            // For longer delays use delay() (milliseconds)
+            delay(delayUs / 1000);
+          } else {
+            // For shorter delays use delayMicroseconds
+            delayMicroseconds(delayUs);
+          }
         }
-        
-        index = 0; // Reset buffer for next line
-      } 
-      else if (index < sizeof(buffer) - 1) {
-        buffer[index++] = c; // Add character to buffer
       }
     }
     
     pathFile.close();
-    Serial.println("Path execution complete.");
+    Serial.println("Path following complete.");
   } else {
-    Serial.print("Error opening file: ");
-    Serial.println(PATH_FILENAME);
+    Serial.println("Error opening path.txt");
+    delay(500);
   }
 }
