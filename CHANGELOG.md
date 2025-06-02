@@ -1,17 +1,14 @@
 
-<<<<<<< Updated upstream
 # Version 0.4.0 XX/05/2025
 
 - Restructure to modular code `openclino.h`, `openclino.cpp`, and `openclino.ino`.
 - Remove raspberry_pi IMU code.
 - Add `.gitignore`.
-=======
 # Version 0.3.2 02/06/2025
 
 - Fix `calibrate_y_correction()`:
   - Check for `0.0` for `calibrate_y_correction()`.
 - General comment additions.
->>>>>>> Stashed changes
 
 # Version 0.3.1 15/03/2025
 
