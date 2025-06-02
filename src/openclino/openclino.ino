@@ -46,7 +46,6 @@ void enable(bool enableX, bool enableY) {
 
 // functions
 void spin_degs(float Q1_target, float Q2_target, float maxRPM = 10, int finalDelay = 100) {
-    // TODO choose fixed degrees per second speed
     // 🎯 Compute target step movement for X-axis
     long stepsX = round((Q1_target / 360.0) * nStepsPerRotX);
     
@@ -172,9 +171,10 @@ void calibrate_y_correction()
 
   float measuredY = Serial.parseFloat(); // Read user input
 
-  if (measuredY == NULL) {
-    Serial.println("\n❌ Error, you did not enter anything. Exiting calibration."); 
-    return(1);
+  if (measuredY == 0.0) {
+    Serial.print("\n❌ Error, exiting calibration. You entered: "); 
+    Serial.println(measuredY);
+    return;
   }
   
   yCorrection = 360.0 / measuredY;
@@ -247,18 +247,23 @@ void loop()
 {
   buttonState = digitalRead(buttonPin);
 
-  // Turn off motors when button is not pressed.
+  // Disable motors when button is not pressed
   enable(false, false);
 
   if (buttonState == HIGH)
   {
     digitalWrite(LED_BUILTIN, HIGH);
-    enable(true, true);
-    // Uncomment to run calibration
+    // Enable motors
+    enable(true, true); 
+    // Run calibration procedure
+    // please open your Serial Monitor and follow the instructions.
     calibrate_y_correction();
+    // These functions will run a test procedure.
+    // Open the Serial Monitor and ensure the 
+    // frames are rotating correctly.
     test_pulley_ratios();
     test_spin_degs_multi();
-    // Uncomment to run continuous spin
+    // Uncomment to run continuous spin at 10 rpm for both axes
     // spin_continuous(10, 10);
   }
 }
