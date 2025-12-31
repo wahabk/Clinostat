@@ -70,7 +70,9 @@ void loop() {
 
 ### Partial gravity simulation
 
-Partial gravity simulations require a more complex path to follow, which the arduino is not able to compute at runtime.
+The scripts for partial gravity path generation can be found in `src/openclino/partial_gravity/`.
+
+Partial gravity simulations require a more complex path to follow, which the arduino is not able to compute at runtime, therefore, this requires generating a path on your computer using a python script and reading the path on the arduino using a MicroSD card reader.
 
 The method is based on a geodesic random walk on a spheroid. The sphere is sampled evenly which usually results in close to 0g, and the error from the target Gz is computed. A drift term is added to the clinostat's path to bias the running average Gz to converge to the target G. This is based on the paper - [Novel, Moon and Mars, partial gravity simulation paradigms and their effects on the balance between cell growth and cell proliferation during early plant development](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5884789/).
 
@@ -87,5 +89,6 @@ There can be faults with the MicroSD card reader, the card itself, or the file a
 
 1. Make sure the file is called `path.txt` or `PATH_FILENAME` is adjusted in `openclino.cpp`.
 2. Make sure the file is in the root directory of the SD card (not inside another folder).
-3. Ensure the SD card and reader work with `test_sd/test_sd.ino`.
-4. Test that the path file works with `test_path/test_path.ino`.
+3. Use the debugging scripts to test the SD card and path file separately. Open your Serial Monitor and follow the instructions:
+   1. Ensure the SD card and reader work with `test_sd/test_sd.ino`. This will read the SD card, write some text to the file `test.txt` and then read the file.
+   2. Test that the path file works with `test_path/test_path.ino`. This will read each file line by line and verify it's format.

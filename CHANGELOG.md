@@ -1,9 +1,12 @@
 
-# Version 0.4.0 XX/05/2025
+# Version 0.4.0 26/12/2025
 
-- Restructure to modular code `openclino.h`, `openclino.cpp`, and `openclino.ino`.
-- Remove raspberry_pi IMU code.
-- Add `.gitignore`.
+This update mainly replaces the 3D printed y_pulley with an off the shelf 30 tooth GT2 pulley.
+
+- y_pulley.3mf removed.
+- Build guide updated and admonition removed.
+- BOM updated respectively to move y_pulley from printed to bought parts.
+
 # Version 0.3.2 02/06/2025
 
 - Fix `calibrate_y_correction()`:
