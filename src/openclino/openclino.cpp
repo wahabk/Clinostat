@@ -63,7 +63,7 @@ void setupPins() {
 
 void setupSerial() {
   Serial.begin(9600);
-  Serial.print("--\nHello from OpenClino.\n--\n");
+  Serial.print("\n--\nHello from OpenClino.\n--\n");
   // Print gear ratios and steps information
   Serial.print("xRatio: ");
   Serial.println(xRatio);
