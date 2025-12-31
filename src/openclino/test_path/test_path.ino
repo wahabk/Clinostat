@@ -17,7 +17,7 @@ void setup() {
     ; // Wait for serial port to connect (needed for native USB port only)
   }
 
-  Serial.println("OpenClino Path Reader Test");
+  Serial.println("\n\nOpenClino Path Reader Test");
   Serial.println("-------------------------");
 
   // Initialize SD card
@@ -62,22 +62,17 @@ void setup() {
           
           // Parse the space-delimited values
           int firstSpace = line.indexOf(' ');
-          int secondSpace = line.indexOf(' ', firstSpace + 1);
           
-          if (firstSpace > 0 && secondSpace > 0) {
+          if (firstSpace > 0) {
             float xPos = line.substring(0, firstSpace).toFloat();
-            float yPos = line.substring(firstSpace + 1, secondSpace).toFloat();
-            long delayUs = line.substring(secondSpace + 1).toFloat();
+            float yPos = line.substring(firstSpace + 1).toFloat();
             
             Serial.print("Line ");
             Serial.print(lineCount);
             Serial.print(": X=");
             Serial.print(xPos);
             Serial.print(", Y=");
-            Serial.print(yPos);
-            Serial.print(", Delay=");
-            Serial.print(delayUs);
-            Serial.println(" μs");
+            Serial.println(yPos);
           }
           else {
             Serial.print("Line ");
