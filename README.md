@@ -24,11 +24,11 @@ I have provided:
 
 ## Quick Usage
 
-To run in clinorotation mode simply add these to your arduino's loop function, this will run the x axis at 30 rpm and the y axis at 60:
+To run in clinorotation mode simply add these to your arduino's loop function, this will run the x axis at 3 rpm and the y axis at 4:
 
 ```cpp
 void loop() {
-    spin_continuous(30,60);
+    spin_continuous(3,4);
 }
 ```
 
