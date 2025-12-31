@@ -14,17 +14,6 @@ Enables or disables the X and Y motors.
 
 ---
 
-### `void spin_continuous(float speedX = 10, float speedY = 10, int buttonDelay = 1000)`
-
-Spins the X and Y motors continuously at specified speeds until a button is pressed.
-
-- **Parameters:**
-  - `speedX` (float, default = 10): Speed of the X-axis motor in RPM.
-  - `speedY` (float, default = 10): Speed of the Y-axis motor in RPM.
-  - `buttonDelay` (int, default = 1000): Delay in milliseconds after stopping the motors.
-
----
-
 ### `void spin_degs(float Q1_target, float Q2_target, float maxRPM = 10, int finalDelay = 100)`
 
 Spins the X and Y motors by specified degrees at specified speeds.
@@ -37,11 +26,24 @@ Spins the X and Y motors by specified degrees at specified speeds.
 
 ---
 
+### `void spin_continuous(float speedX = 10, float speedY = 10, int buttonDelay = 1000)`
+
+Spins the X and Y motors continuously at specified speeds until a button is pressed.
+
+- **Parameters:**
+  - `speedX` (float, default = 10): Speed of the X-axis motor in RPM.
+  - `speedY` (float, default = 10): Speed of the Y-axis motor in RPM.
+  - `buttonDelay` (int, default = 1000): Delay in milliseconds after stopping the motors.
+
+---
+
 ### `void calibrate_y_correction()`
 
 Calibrates the Y-axis correction factor by rotating the Y-axis motor and measuring the actual rotation.
 
 ---
+
+## Tests
 
 ### `void test_pulley_ratios()`
 
@@ -52,6 +54,12 @@ Tests the pulley ratios by rotating the X and Y motors by 360 degrees and back.
 ### `void test_spin_degs_multi()`
 
 Tests the `spin_degs` function with multiple rotations.
+
+---
+
+### `void follow_path()`
+
+Reads `PATH_FILENAME` (by default `path.txt`) from an SD card, and executes `spin_degs()` on each line of the file. The function will error if the SD card can't be read or if the file is not found.
 
 ---
 

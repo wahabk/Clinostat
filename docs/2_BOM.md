@@ -6,8 +6,9 @@
 |--------------|----------|---------------------------------------------|-----------------------------|
 | Electronics  | 1        | Arduino (your choice)                       | -                           |
 |              | 2        | Nema 17 motors                              | 0.42Nm                      |
-|              | 2        | Stepper motor controllers                   | A4988                       |
+|              | 2        | Stepper motor controllers                   | A4988 drivers are cheap. TMC2208 drivers will give better, silent operation with less vibration.                       |
 |              | 1        | Power supply                                | -                           |
+|              | 1        | MicroSD card reader                         | Optional, required for partial gravity. 5V 6 spin SPI interface SD card reader |
 | Hardware     | 2        | GT2 belts                                   | 200mm, 6mm width            |
 |              | 1        | GT2 belt                                    | 500mm, 6mm width            |
 |              | 2        | Stepper motor timing pulleys                | 16 tooth                    |
