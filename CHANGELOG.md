@@ -1,4 +1,19 @@
 
+# Version 0.5.0 31/12/2025
+
+## Major Partial Gravity Simulation Update
+
+- Restructure to modular code `openclino.h` (header file), `openclino.cpp` (code), and `openclino.ino` (arduino).
+- MicroSD card.
+  - Add MicroSD card reader to optional circuit design image.
+  - Add MicroSD card debugging scripts `test_sd` and `test_path`.
+- Partial gravity.
+  - Add `void follow_path()` to `openclino.cpp`
+  - Add `src/openclino/partial_gravity/` scripts `generate_test_path.py` and `generate_random_walk_path.py`
+- Respective documentation updates for all above.
+- Remove vestigial `src/raspberry_pi` IMU code.
+- Add `.gitignore`.
+
 # Version 0.4.0 26/12/2025
 
 This update mainly replaces the 3D printed y_pulley with an off the shelf 30 tooth GT2 pulley.
