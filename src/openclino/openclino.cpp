@@ -44,6 +44,7 @@ double nStepsPerRotY = stepsPerRevolution * yRatio;
 
 // SD definitions
 const char* PATH_FILENAME = "path.txt";
+File pathFile;
 
 void setupPins() {
   // Input pins
@@ -106,11 +107,6 @@ void spin_degs(float Q1_target, float Q2_target, float maxRPM = 10, int finalDel
     float stepsPerSecond = (maxRPM / 60.0) * max(nStepsPerRotX, nStepsPerRotY);
     float stepDelay = (1.0 / stepsPerSecond) * 1000000.0;
 
-    Serial.print("stepsX: ");
-    Serial.println(stepsX);
-    Serial.print("compensatedStepsY: ");
-    Serial.println(compensatedStepsY);
-
     // Step both motors proportionally
     long stepCountX = 0, stepCountY = 0;
     for (long i = 0; i < maxSteps; i++) {
@@ -129,7 +125,6 @@ void spin_degs(float Q1_target, float Q2_target, float maxRPM = 10, int finalDel
         delayMicroseconds(stepDelay);
     }
     delay(finalDelay);
-    Serial.println("Motion complete.\n");
 }
 
 void spin_continuous(float speedX = 10, float speedY = 10, int buttonDelay = 1000) {
@@ -182,7 +177,6 @@ void spin_continuous(float speedX = 10, float speedY = 10, int buttonDelay = 100
     delay(buttonDelay);
     Serial.println("Continuous motion stopped.");
 }
-
 
 // calibration
 void calibrate_y_correction()
@@ -253,57 +247,63 @@ void test_spin_degs_multi()
   spin_degs(-360, -360);
 }
 
-// Read and execute path from SD card
 void follow_path() {
-  File pathFile = SD.open("path.txt");
+  Serial.print("--\nOpenClino Path Follower\n--\n");
   
-  if (pathFile) {
-    Serial.print("Reading path from path.txt...\n");
-    
-    // Process data lines
-    while (pathFile.available()) {
-      String line = pathFile.readStringUntil('\n');
-      
-      // Skip empty lines
-      if (line.length() <= 1) continue;
-      
-      // Parse space-delimited format (x y delay_us)
-      int firstSpace = line.indexOf(' ');
-      int secondSpace = line.indexOf(' ', firstSpace + 1);
-      
-      if (firstSpace > 0 && secondSpace > 0) {
-        float xDeg = line.substring(0, firstSpace).toFloat();
-        float yDeg = line.substring(firstSpace + 1, secondSpace).toFloat();
-        long delayUs = line.substring(secondSpace + 1).toFloat();
-        
-        // Debug output
-        Serial.print("Moving to (");
-        Serial.print(xDeg);
-        Serial.print(", ");
-        Serial.print(yDeg);
-        Serial.print(") with delay ");
-        Serial.println(delayUs);
-        
-        // Move to position
-        spin_degs(xDeg, yDeg);
-        
-        // Wait for the specified delay
-        if (delayUs > 0) {
-          if (delayUs > 16383) {
-            // For longer delays use delay() (milliseconds)
-            delay(delayUs / 1000);
-          } else {
-            // For shorter delays use delayMicroseconds
-            delayMicroseconds(delayUs);
-          }
-        }
-      }
-    }
-    
-    pathFile.close();
-    Serial.println("Path following complete.");
-  } else {
-    Serial.println("Error opening path.txt");
-    delay(500);
+  // Initialize SD card
+  Serial.print("Initializing SD card...");
+  if (!SD.begin(chipSelect)) {
+    Serial.println("SD FAILED!");
+    return;
   }
+  Serial.println("OK");
+  
+  // Open path file
+  Serial.print("Opening ");
+  Serial.print(PATH_FILENAME);
+  Serial.print("...");
+  pathFile = SD.open(PATH_FILENAME);
+  
+  if (!pathFile) {
+    Serial.println("READING PATH_FILENAME FAILED!");
+    return;
+  }
+  Serial.println("OK");
+  
+  // Count total positions for progress tracking
+  int totalPositions = 0;
+  while (pathFile.available()) {
+    pathFile.readStringUntil('\n');
+    totalPositions++;
+  }
+  pathFile.close();
+  
+  Serial.print("Total positions in path: ");
+  Serial.println(totalPositions);
+  
+  // Reopen file to read from beginning
+  pathFile = SD. open(PATH_FILENAME);
+  if (!pathFile) {
+    Serial.println("Error reopening file!");
+    return;
+  }
+  Serial.println("Executing path...");
+  
+  // Main execution loop
+  while (pathFile.available()) {
+    String line = pathFile.readStringUntil('\n');
+    line.trim();
+    if (line.length() == 0) continue;
+
+    int spaceIdx = line.indexOf(' ');
+    float dX = line.substring(0, spaceIdx).toFloat();
+    float dY = line.substring(spaceIdx + 1).toFloat();
+
+    if (abs(dX) > 0.001 || abs(dY) > 0.001) {
+        spin_degs(dX, dY, 3, 0);
+    }
+  }
+
+  pathFile.close();
+  Serial.print("--\nPath execution complete!\n--\n");
 }

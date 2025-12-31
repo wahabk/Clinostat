@@ -28,12 +28,12 @@ void loop()
     digitalWrite(LED_BUILTIN, HIGH);
     enable(true, true);
     // Uncomment to run calibration
-//    calibrate_y_correction();
+    // calibrate_y_correction();
     test_pulley_ratios();
     test_spin_degs_multi();
     // Uncomment to run continuous spin
     // spin_continuous(10, 10);
     // Uncomment to run follow_path
-//    follow_path();
+    // follow_path();
   }
 }

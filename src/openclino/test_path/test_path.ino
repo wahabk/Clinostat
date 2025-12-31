@@ -1,5 +1,5 @@
 /*
- * Test program to read openclino_path.txt from SD card and print it to Serial
+ * Test program to read path.txt from SD card and print it to Serial
  * This helps verify file format and SD card access before attempting actual path execution
  */
 
@@ -98,7 +98,7 @@ void setup() {
     }
   }
   else {
-    Serial.println("Error opening openclino_path.txt");
+    Serial.println("Error opening path.txt");
     Serial.println("Make sure the file exists on the SD card");
     
     // List all files on the SD card to help troubleshoot
