@@ -65,10 +65,10 @@ c) Install y_pulley and y_guide, with washers in between.
 
 The hex nuts can be push fit into the x body.
 
-Tighten the y_pulley grub screw so that it rotates with the y body.
+Tighten the y_pulley grub screw(s) so that it rotates with the y body.
 
->[!CAUTION]
-> the grub screw design of the y pully relies on a threaded insert that needs to be installed with a soldering iron. I will endeavor to make one that has a normal hex nut.
+>[!NOTE]
+> The y_pulley has been updated since version 0.4 to be an off the shelf 6mm GT2 30T pulley, instead of a 3D printed part as shown in these pictures.
 
 <img src="images/build_guide/3_y_guide.jpg" alt="combine" width="400"/>
 

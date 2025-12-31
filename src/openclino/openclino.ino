@@ -20,7 +20,7 @@ void loop()
 {
   buttonState = digitalRead(buttonPin);
 
-  // Turn off motors when button is not pressed.
+  // Disable motors when button is not pressed
   enable(false, false);
 
   if (buttonState == HIGH)
@@ -31,7 +31,7 @@ void loop()
     // calibrate_y_correction();
     test_pulley_ratios();
     test_spin_degs_multi();
-    // Uncomment to run continuous spin
+    // Uncomment to run continuous spin at 10 rpm for both axes
     // spin_continuous(10, 10);
     // Uncomment to run follow_path
     // follow_path();
