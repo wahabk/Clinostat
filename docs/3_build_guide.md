@@ -12,7 +12,7 @@
     - [Tools required:](#tools-required)
   - [Build Instructions:](#build-instructions)
     - [**1 - Build y\_turn.**](#1---build-y_turn)
-    - [**2 - Combiningx and y bodies.**](#2---combiningx-and-y-bodies)
+    - [**2 - Combining x and y bodies.**](#2---combining-x-and-y-bodies)
     - [**3 - x\_pulley and m2y pulley.**](#3---x_pulley-and-m2y-pulley)
     - [**4 - Build the base.**](#4---build-the-base)
     - [**5 - Final Assembly.**](#5---final-assembly)
@@ -48,7 +48,7 @@ a) Place the washers between the bolthead/nut and the bearing.
 
 <img src="images/build_guide/1_y_turn.jpg" alt="y_turn" width="400"/>
 
-### **2 - Combiningx and y bodies.**
+### **2 - Combining x and y bodies.**
 
 a) Push fit bearings to the y_guide and the x body. 
 

@@ -2,24 +2,25 @@
 
 #### To Buy
 
-| Category     | Quantity | Description                                 | Specifications                |
-|--------------|----------|---------------------------------------------|-----------------------------  |
-| Electronics  | 1        | Arduino (your choice)                       | -                             |
-|              | 2        | Nema 17 motors                              | 0.42Nm                        |
-|              | 2        | Stepper motor controllers                   | A4988                         |
-|              | 1        | Power supply                                | -                             |
-| Hardware     | 2        | GT2 belts                                   | 200mm, 6mm width              |
-|              | 1        | GT2 belt                                    | 500mm, 6mm width              |
-|              | 2        | Stepper motor timing pulleys (m_pulley)     | 16 tooth                      |
+| Category     | Quantity | Description                                 | Specifications              |
+|--------------|----------|---------------------------------------------|-----------------------------|
+| Electronics  | 1        | Arduino (your choice)                       | -                           |
+|              | 2        | Nema 17 motors                              | 0.42Nm                      |
+|              | 2        | Stepper motor controllers                   | A4988 drivers are cheap. TMC2208 drivers will give better, silent operation with less vibration.                       |
+|              | 1        | Power supply                                | -                           |
+|              | 1        | MicroSD card reader                         | Optional, required for partial gravity. 5V 6 spin SPI interface SD card reader |
+| Hardware     | 2        | GT2 belts                                   | 200mm, 6mm width            |
+|              | 1        | GT2 belt                                    | 500mm, 6mm width            |
+|              | 2        | Stepper motor timing pulleys                | 16 tooth                    |
 |              | 1        | GT-2 Pulley (y_pulley)                      | 30 tooth, 8mm bore, 6mm width |
-|              | 1        | Aluminium extrusion                         | 1mx20mmx20mm (cut in half)    |
-|              | 12       | Skateboard bearings                         | 8mm (ID), 22mm (OD)           |
-| Bolts        | 4        | Hex bolts                                   | M8 by 60mm                    |
-|              | 2        | Hex bolts                                   | M8 by 100mm                   |
-|              | 8        | Alan bolts                                  | M3 by 12mm                    |
-|              | 12       | Alan bolts                                  | M5 by 16mm                    |
-|              | 13       | Washers                                     | M8 (8mm ID, 16mm OD)          |
-| Miscellaneous| 1        | Printing filament                           | 1KG, your choice of filament  |
+|              | 1        | Aluminium extrusion                         | 1mx20mmx20mm (cut in half)  |
+|              | 12       | Skateboard bearings                         | 8mm (ID), 22mm (OD)         |
+| Bolts        | 4        | Hex bolts                                   | M8 by 60mm                  |
+|              | 2        | Hex bolts                                   | M8 by 100mm                 |
+|              | 8        | Alan bolts                                  | M3 by 12mm                  |
+|              | 12       | Alan bolts                                  | M5 by 16mm                  |
+|              | 13       | Washers                                     | M8 (8mm ID, 16mm OD)        |
+| Miscellaneous| 1        | Printing filament                           | 1KG, your choice of filament|
 
 #### To Print
 

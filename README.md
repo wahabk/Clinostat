@@ -32,18 +32,13 @@ void loop() {
 }
 ```
 
-Or to run as a random positioning machine, this will run a random walk routine as specified in ESA's work:
-
-> [!WARNING]  
-> The RPM function is work-in-progress.
-
-```cpp
-void loop() {
-    RPM();
-}
-```
-
 Don't forget to set the output pins for you motor controllers!
+
+## Partial Gravity Simulation
+
+Partial gravity simulations are now possible since Version 0.5.0. Instructions available in [`docs/1_documentation.md/`](docs/1_documentation.md).
+
+<img src="docs/images/example_path.png" alt="Partial gravity simulation." width="1000"/>
 
 ## Contributors
 
