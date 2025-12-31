@@ -34,6 +34,12 @@ void loop() {
 
 Don't forget to set the output pins for you motor controllers!
 
+## Partial Gravity Simulation
+
+Partial gravity simulations are now possible since Version 0.5.0. Instructions available in [`docs/1_documentation.md/`](docs/1_documentation.md).
+
+<img src="docs/images/example_path.png" alt="Partial gravity simulation." width="1000"/>
+
 ## Contributors
 
 [Dan Dragomirescu @dragomda](https://github.com/dragomda)
