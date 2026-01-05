@@ -29,7 +29,7 @@ You can optionally add a MicroSD card reader to the circuit
 
 Again I base the circuit on [this great article by lastminuteengineers](https://lastminuteengineers.com/arduino-micro-sd-card-module-tutorial/]).
 
-![Clinostat with MicroSD circuit.](images\openclino_circuit_diagram_with_microSD_reader.png "Circuit w/ SD diagram. Made with Cirkit Designer.")
+![Clinostat with MicroSD circuit.](images/openclino_circuit_diagram_with_microSD_reader.png "Circuit w/ SD diagram. Made with Cirkit Designer.")
 
 
 ## Code
