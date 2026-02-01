@@ -1,5 +1,7 @@
 # OpenClino - Open-source 3D clinostat
 
+[![DOI](https://zenodo.org/badge/582383837.svg)](https://doi.org/10.5281/zenodo.18448695)
+
 Open-source 3D clinostat. A clinostat is a small scale [microgravity simulator](https://en.wikipedia.org/wiki/Random_positioning_machine).
 
 ![Clinostat cad!](docs/images/openclino_cad.gif "cadModel")
