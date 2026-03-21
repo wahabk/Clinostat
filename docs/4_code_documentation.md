@@ -14,7 +14,7 @@ Enables or disables the X and Y motors.
 
 ---
 
-### `void spin_degs(float Q1_target, float Q2_target, float maxRPM = 10, int finalDelay = 100)`
+### `void spin_degs(float Q1_target, float Q2_target, float maxRPM = 10)`
 
 Spins the X and Y motors by specified degrees at specified speeds.
 
@@ -22,7 +22,6 @@ Spins the X and Y motors by specified degrees at specified speeds.
   - `Q1_target` (float): Degrees to rotate the X-axis motor.
   - `Q2_target` (float): Degrees to rotate the Y-axis motor.
   - `maxRPM` (float, default = 10): Maximum speed of the motors in RPM.
-  - `finalDelay` (int, default = 100): Delay in milliseconds after stopping the motors.
 
 ---
 

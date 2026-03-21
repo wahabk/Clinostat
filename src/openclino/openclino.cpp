@@ -83,7 +83,7 @@ void enable(bool enableX, bool enableY) {
 }
 
 // functions
-void spin_degs(float Q1_target, float Q2_target, float maxRPM = 10, int finalDelay = 100) {
+void spin_degs(float Q1_target, float Q2_target, float maxRPM = 10) {
     // 🎯 Compute target step movement for X-axis
     long stepsX = round((Q1_target / 360.0) * nStepsPerRotX);
     
@@ -106,6 +106,7 @@ void spin_degs(float Q1_target, float Q2_target, float maxRPM = 10, int finalDel
     // Convert max RPM to step delay
     float stepsPerSecond = (maxRPM / 60.0) * max(nStepsPerRotX, nStepsPerRotY);
     float stepDelay = (1.0 / stepsPerSecond) * 1000000.0;
+    unsigned long stepDelayUs = (unsigned long)stepDelay;
 
     // Step both motors proportionally
     long stepCountX = 0, stepCountY = 0;
@@ -121,10 +122,9 @@ void spin_degs(float Q1_target, float Q2_target, float maxRPM = 10, int finalDel
             digitalWrite(stepPinY, LOW);
             stepCountY++;
         }
-
-        delayMicroseconds(stepDelay);
+        delay(stepDelayUs / 1000);
+        delayMicroseconds(stepDelayUs % 1000);
     }
-    delay(finalDelay);
 }
 
 void spin_continuous(float speedX = 10, float speedY = 10, int buttonDelay = 1000) {
@@ -199,6 +199,7 @@ void calibrate_y_correction()
 
   // Rotate back to 0 to reset before measuring correction
   spin_degs(0, -360);
+  delay(100);
 
   float measuredY = Serial.parseFloat(); // Read user input
 
@@ -227,10 +228,14 @@ void test_pulley_ratios()
 {
   Serial.println("Testing pulley ratios, outer frame (X) should rotate 360° and back.");
   spin_degs(360.0, 0);
+  delay(100);
   spin_degs(-360.0, 0);
+  delay(100);
   Serial.println("Inner frame should rotate 360° and back.");
   spin_degs(0, 360.0);
+  delay(100);
   spin_degs(0, -360.0);
+  delay(100);
 }
 
 void test_spin_degs_multi()
@@ -238,13 +243,19 @@ void test_spin_degs_multi()
   Serial.println("--\nTesting spin_degs.\n--");
   Serial.println("90°");
   spin_degs(90, 90);
+  delay(100);
   spin_degs(-90, -90);
+  delay(100);
   Serial.println("180°");
   spin_degs(180, 180);
+  delay(100);
   spin_degs(-180, -180);
+  delay(100);
   Serial.println("360°");
   spin_degs(360, 360);
+  delay(100);
   spin_degs(-360, -360);
+  delay(100);
 }
 
 void follow_path() {
@@ -300,7 +311,7 @@ void follow_path() {
     float dY = line.substring(spaceIdx + 1).toFloat();
 
     if (abs(dX) > 0.001 || abs(dY) > 0.001) {
-        spin_degs(dX, dY, 3, 0);
+        spin_degs(dX, dY, 3);
     }
   }
 
