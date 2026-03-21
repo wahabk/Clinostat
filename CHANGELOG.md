@@ -1,9 +1,13 @@
 
-# Version 0.5.1 21/03/2025
+# Version 0.5.2 21/03/2025
 
 - Update `spin_degs()`
   - Split the delay into `delay(stepDelayUs / 1000);` and `delayMicroseconds(stepDelayUs % 1000);` since delayMicroseconds is only accurate to 16,000 microseconds. [Reference](https://docs.arduino.cc/language-reference/en/functions/time/delayMicroseconds/?_gl=1*ow8df7*_up*MQ..*_ga*MTYzOTY1MTcxMS4xNzc0MDkyNTky*_ga_NEXN8H46L5*czE3NzQwOTI1ODkkbzEkZzAkdDE3NzQwOTI1ODkkajYwJGwwJGg1MjI2MjM3NDA.).
   - Remove finalDelay as it is unnecessary.
+
+# Version 0.5.1 05/01/2026
+
+Fix new circuit image path.
 
 # Version 0.5.0 31/12/2025
 
