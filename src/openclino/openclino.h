@@ -52,7 +52,7 @@ const int chipSelect = 10;
 void setupPins();
 void setupSerial();
 void enable(bool enableX, bool enableY);
-void spin_degs(float Q1_target, float Q2_target, float maxRPM = 10, int finalDelay = 100);
+void spin_degs(float Q1_target, float Q2_target, float maxRPM = 10);
 void spin_continuous(float speedX = 10, float speedY = 10, int buttonDelay = 1000);
 void calibrate_y_correction();
 void test_pulley_ratios();
