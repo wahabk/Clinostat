@@ -1,4 +1,12 @@
 
+# Version 0.6.0 XX/04/2025
+
+taSPG Update
+
+- Add `generate_taspg_path.py` 
+- Remove old `generate_random_walk_path.py`
+- Update example SPG image
+
 # Version 0.5.2 21/03/2025
 
 - Update `spin_degs()`
