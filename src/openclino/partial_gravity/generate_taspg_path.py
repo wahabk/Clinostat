@@ -1,5 +1,5 @@
 """
-taSPG path generator for OpenClino
+taSPG path generator for OpenClino Based on:
 Kim, Park & Kim (2026), Scientific Reports
 https://doi.org/10.1038/s41598-026-40665-6
 
@@ -235,7 +235,7 @@ def sphere_path_to_clinostat(theta_arr, phi_arr, filename="path.txt"):
 
 
 if __name__ == "__main__":
-    target_g = 0.6  # Mars. Moon = 0.17
+    target_g = 0.38  # Mars. Moon = 0.17
 
     path, theta_arr, phi_arr, alpha, rest_time, achieved = simulate_taspg(
         target_g, n_steps=1000, dt=0.5

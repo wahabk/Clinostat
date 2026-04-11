@@ -29,11 +29,11 @@ void loop()
     enable(true, true);
     // Uncomment to run calibration
     // calibrate_y_correction();
-    test_pulley_ratios();
-    test_spin_degs_multi();
+//    test_pulley_ratios();
+//    test_spin_degs_multi();
     // Uncomment to run continuous spin at 10 rpm for both axes
     // spin_continuous(10, 10);
     // Uncomment to run follow_path
-    // follow_path();
+     follow_path();
   }
 }
