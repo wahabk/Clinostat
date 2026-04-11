@@ -1,4 +1,18 @@
 
+# Version 0.6.0 11/04/2025
+
+## taSPG Update
+
+This update implements the paper for partial gravity simulation:
+
+Kim, Park & Kim (2026), Scientific Reports
+https://doi.org/10.1038/s41598-026-40665-6
+
+- Add `generate_taspg_path.py` 
+- Fix doubling back from `sphere_path_to_clinostat()` output
+- Remove old `generate_random_walk_path.py`
+- Update example SPG image
+
 # Version 0.5.2 21/03/2025
 
 - Update `spin_degs()`

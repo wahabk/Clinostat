@@ -42,6 +42,19 @@ Partial gravity simulations are now possible since Version 0.5.0. Instructions a
 
 <img src="docs/images/example_path.png" alt="Partial gravity simulation." width="1000"/>
 
+Since version 0.6.0 this now implements time averaged Simulated Partial Gravity (taSPG) based on the [Kim et. al. 2026, Scientific Reports](https://doi.org/10.1038/s41598-026-40665-6).
+
 ## Contributors
 
 [Dan Dragomirescu @dragomda](https://github.com/dragomda)
+
+## Citation
+
+[![DOI](https://zenodo.org/badge/582383837.svg)](https://doi.org/10.5281/zenodo.18448695)
+
+
+If you used OpenClino for your research, please reference the Zenodo release:
+
+```
+Wahab Kawafi. (2026). wahabk/Clinostat. Zenodo. https://doi.org/10.5281/zenodo.18448825
+```
