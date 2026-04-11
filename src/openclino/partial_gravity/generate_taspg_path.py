@@ -17,6 +17,8 @@ Gravity vector in sample frame (standard spherical coords):
 
 The only parameter to tune is target_taspg.
 wc and wmin are hardware constants (measure wmin on your motors).
+
+Generated with the help of Claude.
 """
 
 import numpy as np
@@ -71,34 +73,36 @@ def simulate_taspg(target_taspg, wc=2.061, wmin=0.229, n_steps=10000, dt=0.1):
     phi_rpm  = wc * (1.0 + 1.0 / 1.618)
     phi_rate = phi_rpm * (TWO_PI / 60.0)
 
-    theta    = 0.0
-    phi      = 0.0
-    rt_timer = 0.0
-    path     = np.zeros((n_steps + 1, 3))
+    theta     = 0.0
+    phi       = 0.0
+    rt_timer  = 0.0
+    path      = np.zeros((n_steps + 1, 3))
+    theta_arr = np.zeros(n_steps + 1)  # cumulative — never wrapped
+    phi_arr   = np.zeros(n_steps + 1)  # cumulative — never wrapped
 
     for i in range(n_steps + 1):
-        # Standard spherical coords: tilt=theta, azimuth=phi
-        # gz = -cos(theta) is the taSPG-bearing component
+        theta_arr[i] = theta
+        phi_arr[i]   = phi
         path[i] = [
             np.sin(theta) * np.cos(phi),
             np.sin(theta) * np.sin(phi),
            -np.cos(theta),
         ]
 
-        phi = (phi + phi_rate * dt) % TWO_PI
+        phi += phi_rate * dt           # cumulative, no mod
 
         if rt_timer > 0.0:
             rt_timer = max(0.0, rt_timer - dt)
         else:
-            w_rpm   = wc * (1.0 - alpha * np.cos(theta))
-            dtheta  = w_rpm * (TWO_PI / 60.0) * dt
-            new_th  = theta + dtheta
+            w_rpm  = wc * (1.0 - alpha * np.cos(theta))
+            dtheta = w_rpm * (TWO_PI / 60.0) * dt
+            new_th = theta + dtheta
             if new_th >= TWO_PI and rest_time > 0.0:
                 rt_timer = rest_time
-            theta = new_th % TWO_PI
+            theta = new_th             # cumulative, no mod
 
     achieved = float(np.linalg.norm(path.mean(axis=0)))
-    return path, alpha, rest_time, achieved
+    return path, theta_arr, phi_arr, alpha, rest_time, achieved
 
 
 def analyze_gravity_statistics(path, target_gz):
@@ -204,7 +208,6 @@ def plot_clinostat_path(path, target_gz):
     ax2.set_xlabel('Step')
     ax2.set_ylabel('Gravity magnitude / component')
     ax2.set_title('Gravity Direction Over Time')
-    ax2.set_ylim([-1, 1])
     ax2.legend()
     ax2.grid(True, alpha=0.3)
 
@@ -212,34 +215,19 @@ def plot_clinostat_path(path, target_gz):
     return fig
 
 
-def sphere_path_to_clinostat(path_xyz, filename="path.txt", pole_threshold=0.05):
+def sphere_path_to_clinostat(theta_arr, phi_arr, filename="path.txt"):
     """
-    Convert sphere path to motor delta commands.
-    
-    Rather than projecting rotation vectors (lossy — discards the X component),
-    convert each point to spherical angles (θ, φ) directly, then diff.
-    
-    For g = [sin(θ)cos(φ), sin(θ)sin(φ), -cos(θ)]:
-        θ = arccos(-gz)           outer motor (tilt)
-        φ = arctan2(gy, gx)       inner motor (azimuth)
-    pole_threshold : sin(θ) below this value suppresses the φ delta.
-                     0.05 corresponds to ~3° from the pole.
+    Convert cumulative motor angle arrays from simulate_taspg to delta
+    commands for path.txt.
+
+    Uses the raw cumulative θ and φ tracked during simulation — no
+    reconstruction from xyz, no unwrapping needed, no pole singularity.
+
+    Δθ = outer motor (tilt)    steps in degrees
+    Δφ = inner motor (azimuth) steps in degrees
     """
-    path_xyz = np.asarray(path_xyz)
-
-    gz  = np.clip(path_xyz[:, 2], -1.0, 1.0)
-    θ   = np.arccos(-gz)
-    φ   = np.arctan2(path_xyz[:, 1], path_xyz[:, 0])
-    φ_unwrapped = np.unwrap(φ)
-
-    Δθ = np.diff(np.degrees(θ))
-    Δφ = np.diff(np.degrees(φ_unwrapped))
-
-    # At each step, the relevant sin(θ) is the smaller of the two endpoints
-    # (if either is near the pole, the φ command is meaningless)
-    sin_θ = np.sin(θ)
-    near_pole = (sin_θ[:-1] < pole_threshold) | (sin_θ[1:] < pole_threshold)
-    Δφ[near_pole] = 0.0
+    Δθ = np.diff(np.degrees(theta_arr))
+    Δφ = np.diff(np.degrees(phi_arr))
 
     deltas = np.column_stack([Δθ, Δφ])
     np.savetxt(filename, deltas, fmt="%.6f", delimiter=" ")
@@ -247,10 +235,10 @@ def sphere_path_to_clinostat(path_xyz, filename="path.txt", pole_threshold=0.05)
 
 
 if __name__ == "__main__":
-    target_g = 0.38  # Mars. Moon = 0.17
+    target_g = 0.6  # Mars. Moon = 0.17
 
-    path, alpha, rest_time, achieved = simulate_taspg(
-        target_g, n_steps=500, dt=0.5
+    path, theta_arr, phi_arr, alpha, rest_time, achieved = simulate_taspg(
+        target_g, n_steps=1000, dt=0.5
     )
 
     print(f"alpha={alpha:.4f}  RT={rest_time:.1f}s  achieved taSPG={achieved:.3f}g")
@@ -259,5 +247,5 @@ if __name__ == "__main__":
     fig = plot_clinostat_path(path, target_g)
     plt.show()
 
-    clino_path = sphere_path_to_clinostat(path)
+    clino_path = sphere_path_to_clinostat(theta_arr, phi_arr)
     print(clino_path[:10])
